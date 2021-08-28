@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "tinygates:item/tiny_and_gate"
+  }
+}

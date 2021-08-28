@@ -1,0 +1,7 @@
+{
+  "itemGroup.tinygates": "Tiny Gates",
+  "item.tinygates.tiny_and_gate" : "Tiny AND Gate",
+  "message.item.tinygates.tiny_and_gate": "§7Outputs to front when a signal is received to both left AND right side.§r",
+  "item.tinygates.tiny_or_gate" : "Tiny OR Gate",
+  "message.item.tinygates.tiny_or_gate": "§7Outputs to front when a signal is received to either left OR right side.§r"
+}
