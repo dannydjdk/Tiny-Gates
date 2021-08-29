@@ -3,5 +3,13 @@
   "item.tinygates.tiny_and_gate" : "Tiny AND Gate",
   "message.item.tinygates.tiny_and_gate": "§7Outputs to front when a signal is received to both left AND right side.§r",
   "item.tinygates.tiny_or_gate" : "Tiny OR Gate",
-  "message.item.tinygates.tiny_or_gate": "§7Outputs to front when a signal is received to either left OR right side.§r"
+  "message.item.tinygates.tiny_or_gate": "§7Outputs to front when a signal is received to either left OR right side.§r",
+  "item.tinygates.tiny_xor_gate" : "Tiny XOR Gate",
+  "message.item.tinygates.tiny_xor_gate": "§7Outputs to front when the input signals do not match, similar to a 3-way light switch.§r",
+  "item.tinygates.tiny_not_gate" : "Tiny NOT Gate",
+  "message.item.tinygates.tiny_not_gate": "§7Outputs to front when there is no signal to the back. Similar to redstone torch but to single direction with no delay.§r",
+  "item.tinygates.tiny_rs_latch" : "Tiny RS Latch",
+  "message.item.tinygates.tiny_rs_latch": "§7Outputs to front when signal on left (Set signal) is pulsed. Remains on until signal on right (Reset signal) is pulsed.§r",
+  "item.tinygates.tiny_t_flip_flop" : "Tiny T Flip Flop",
+  "message.item.tinygates.tiny_t_flip_flop": "§7Output to front toggles on pulse to back..§r"
 }

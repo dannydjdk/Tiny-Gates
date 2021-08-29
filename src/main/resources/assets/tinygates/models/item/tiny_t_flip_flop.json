@@ -1,7 +1,7 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "tinygates:block/or_gate_on"
+    "layer0": "tinygates:block/t_flip_flop_on_off"
   },
   "display": {
     "gui": {

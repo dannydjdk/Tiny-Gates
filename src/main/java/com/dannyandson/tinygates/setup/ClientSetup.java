@@ -1,8 +1,7 @@
 package com.dannyandson.tinygates.setup;
 
 import com.dannyandson.tinygates.TinyGates;
-import com.dannyandson.tinygates.gates.ANDGate;
-import com.dannyandson.tinygates.gates.ORGate;
+import com.dannyandson.tinygates.gates.*;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -27,6 +26,16 @@ public class ClientSetup {
         event.addSprite(ANDGate.TEXTURE_AND_GATE_OFF);
         event.addSprite(ORGate.TEXTURE_OR_GATE_ON);
         event.addSprite(ORGate.TEXTURE_OR_GATE_OFF);
+        event.addSprite(XORGate.TEXTURE_XOR_GATE_ON);
+        event.addSprite(XORGate.TEXTURE_XOR_GATE_OFF);
+        event.addSprite(NOTGate.TEXTURE_NOT_GATE_ON);
+        event.addSprite(NOTGate.TEXTURE_NOT_GATE_OFF);
+        event.addSprite(TFlipFlop.TEXTURE_ON_ON);
+        event.addSprite(TFlipFlop.TEXTURE_OFF_ON);
+        event.addSprite(TFlipFlop.TEXTURE_ON_OFF);
+        event.addSprite(TFlipFlop.TEXTURE_OFF_OFF);
+        event.addSprite(RSLatch.TEXTURE_ON);
+        event.addSprite(RSLatch.TEXTURE_OFF);
     }
 
 }
