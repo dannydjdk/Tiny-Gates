@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "TRT",
+    "RSR",
+    "TRT"
+  ],
+  "key": {
+    "T": {
+      "item": "tinyredstone:tiny_piston"
+    },
+    "R": {
+      "item": "tinyredstone:tiny_redstone"
+    },
+    "S":
+    {
+      "tag": "forge:silicon"
+    }
+  },
+  "result": {
+    "item": "tinygates:tiny_edge_detector",
+    "count": 4
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "TRT",
+    "RSR",
+    "TRT"
+  ],
+  "key": {
+    "T": {
+      "item": "tinyredstone:tiny_repeater"
+    },
+    "R": {
+      "item": "tinyredstone:tiny_comparator"
+    },
+    "S":
+    {
+      "tag": "forge:silicon"
+    }
+  },
+  "result": {
+    "item": "tinygates:tiny_t_flip_flop",
+    "count": 4
+  }
+}
