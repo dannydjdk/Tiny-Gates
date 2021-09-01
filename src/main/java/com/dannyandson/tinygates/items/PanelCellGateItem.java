@@ -1,7 +1,9 @@
 package com.dannyandson.tinygates.items;
 
 import com.dannyandson.tinygates.setup.ModSetup;
+import com.dannyandson.tinyredstone.api.AbstractPanelCellItem;
 import com.dannyandson.tinyredstone.blocks.PanelBlock;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -14,7 +16,7 @@ import net.minecraft.world.level.Level;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class PanelCellGateItem extends Item{
+public class PanelCellGateItem extends AbstractPanelCellItem {
 
     public PanelCellGateItem() {
         super(new Item.Properties().tab(ModSetup.ITEM_GROUP));
@@ -28,6 +30,6 @@ public class PanelCellGateItem extends Item{
     @Override
     public  void  appendHoverText(ItemStack stack, @Nullable Level world, List<Component> list, TooltipFlag flags)
     {
-        list.add(new TranslatableComponent("message." + this.getDescriptionId()));
+        list.add(new TranslatableComponent("message." + this.getDescriptionId()).withStyle(ChatFormatting.GRAY));
     }
 }

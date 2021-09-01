@@ -14,7 +14,7 @@ public class RenderHelper {
         poseStack.pushPose();
         poseStack.mulPose(Vector3f.ZP.rotationDegrees(180));
         poseStack.translate(-1,-1,0);
-        com.dannyandson.tinyredstone.blocks.RenderHelper.drawRectangle(builder,poseStack,0,1,0,1,sprite_top,combinedLight,alpha);
+        com.dannyandson.tinyredstone.blocks.RenderHelper.drawRectangle(builder,poseStack,0,1,0,1,sprite_top.getU1(), sprite_top.getU0(), sprite_top.getV0(), sprite_top.getV1(),combinedLight,0xFFFFFFFF,alpha);
         poseStack.popPose();
 
 

@@ -2,7 +2,8 @@ package com.dannyandson.tinygates;
 
 import com.dannyandson.tinygates.setup.ClientSetup;
 import com.dannyandson.tinygates.setup.Registration;
-import com.dannyandson.tinyredstone.setup.ModSetup;
+import com.dannyandson.tinygates.network.ModNetworkHandler;
+import com.dannyandson.tinygates.setup.ModSetup;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -38,8 +39,9 @@ public class TinyGates
 
     private void setup(final FMLCommonSetupEvent event)
     {
-        // some preinit code
+        // register everything
         Registration.registerPanelCells();
+        ModNetworkHandler.registerMessages();
     }
 
 }

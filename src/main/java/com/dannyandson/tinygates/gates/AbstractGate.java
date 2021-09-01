@@ -16,7 +16,7 @@ public abstract class AbstractGate implements IPanelCell {
 
     @Override
     public int getStrongRsOutput(Side side) {
-        return (side==Side.FRONT && output)?15:0;
+        return this.getWeakRsOutput(side);
     }
 
     @Override

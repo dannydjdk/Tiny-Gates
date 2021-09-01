@@ -2,6 +2,7 @@ package com.dannyandson.tinygates.setup;
 
 import com.dannyandson.tinygates.TinyGates;
 import com.dannyandson.tinygates.gates.*;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -36,6 +37,16 @@ public class ClientSetup {
         event.addSprite(TFlipFlop.TEXTURE_OFF_OFF);
         event.addSprite(RSLatch.TEXTURE_ON);
         event.addSprite(RSLatch.TEXTURE_OFF);
+        for(ResourceLocation rs : Counter.TEXTURES){
+            event.addSprite(rs);
+        }
+        for(ResourceLocation rs : Clock.TEXTURES){
+            event.addSprite(rs);
+        }
+        event.addSprite(EdgeDetector.TEXTURE_FALLING_OFF);
+        event.addSprite(EdgeDetector.TEXTURE_FALLING_ON);
+        event.addSprite(EdgeDetector.TEXTURE_RISING_OFF);
+        event.addSprite(EdgeDetector.TEXTURE_RISING_ON);
     }
 
 }
