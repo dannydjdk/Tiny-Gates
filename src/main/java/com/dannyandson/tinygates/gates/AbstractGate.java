@@ -1,11 +1,15 @@
 package com.dannyandson.tinygates.gates;
 
+import com.dannyandson.tinyredstone.api.IOverlayBlockInfo;
 import com.dannyandson.tinyredstone.api.IPanelCell;
+import com.dannyandson.tinyredstone.api.IPanelCellInfoProvider;
 import com.dannyandson.tinyredstone.blocks.PanelCellVoxelShape;
+import com.dannyandson.tinyredstone.blocks.PanelTile;
+import com.dannyandson.tinyredstone.blocks.PosInPanelCell;
 import com.dannyandson.tinyredstone.blocks.Side;
 import net.minecraft.nbt.CompoundTag;
 
-public abstract class AbstractGate implements IPanelCell {
+public abstract class AbstractGate implements IPanelCell, IPanelCellInfoProvider {
 
     protected boolean output=false;
 
@@ -49,5 +53,11 @@ public abstract class AbstractGate implements IPanelCell {
     @Override
     public PanelCellVoxelShape getShape() {
         return PanelCellVoxelShape.QUARTERCELLSLAB;
+    }
+
+    @Override
+    public void addInfo(IOverlayBlockInfo overlayBlockInfo, PanelTile panelTile, PosInPanelCell posInPanelCell) {
+        overlayBlockInfo.addText("Output", this.output ? "On" : "Off");
+        overlayBlockInfo.setPowerOutput(0);
     }
 }

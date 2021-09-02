@@ -1,6 +1,7 @@
 package com.dannyandson.tinygates.gates;
 
 import com.dannyandson.tinygates.TinyGates;
+import com.dannyandson.tinyredstone.api.IOverlayBlockInfo;
 import com.dannyandson.tinyredstone.blocks.*;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -90,4 +91,8 @@ public class Counter extends AbstractGate {
         input=compoundTag.getBoolean("input");
     }
 
+    @Override
+    public void addInfo(IOverlayBlockInfo overlayBlockInfo, PanelTile panelTile, PosInPanelCell posInPanelCell) {
+        overlayBlockInfo.addText("Output", this.output + "");
+    }
 }

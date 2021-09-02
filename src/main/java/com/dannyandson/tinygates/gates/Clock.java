@@ -2,6 +2,7 @@ package com.dannyandson.tinygates.gates;
 
 import com.dannyandson.tinygates.TinyGates;
 import com.dannyandson.tinygates.gui.ClockGUI;
+import com.dannyandson.tinyredstone.api.IOverlayBlockInfo;
 import com.dannyandson.tinyredstone.blocks.*;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -98,4 +99,11 @@ public class Clock extends AbstractGate {
         else this.ticks=ticks;
     }
 
+    @Override
+    public void addInfo(IOverlayBlockInfo overlayBlockInfo, PanelTile panelTile, PosInPanelCell posInPanelCell) {
+        overlayBlockInfo.addText("Rate", this.ticks/2 + " ticks");
+        if(this.input) {
+            overlayBlockInfo.addInfo("Locked");
+        }
+    }
 }
