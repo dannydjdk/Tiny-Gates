@@ -11,7 +11,7 @@
   "item.tinygates.tiny_rs_latch" : "Tiny RS Latch",
   "message.item.tinygates.tiny_rs_latch": "Outputs to front when signal on left (Set signal) is pulsed. Remains on until signal on right (Reset signal) is pulsed.",
   "item.tinygates.tiny_t_flip_flop" : "Tiny T Flip Flop",
-  "message.item.tinygates.tiny_t_flip_flop": "Output to front toggles on pulse to back..",
+  "message.item.tinygates.tiny_t_flip_flop": "Output to front toggles on pulse to back.",
   "item.tinygates.tiny_counter" : "Tiny Counter",
   "message.item.tinygates.tiny_counter": "Counts pulses received to back input (up to 15).\nDisplays number and outputs that signal strength to front.\nAlso can act as a potentiometer.\nInput to left locks number.\nInput to right resets counter.",
   "item.tinygates.tiny_clock" : "Tiny Clock",
