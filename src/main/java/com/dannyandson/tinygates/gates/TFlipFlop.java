@@ -2,13 +2,13 @@ package com.dannyandson.tinygates.gates;
 
 import com.dannyandson.tinygates.TinyGates;
 import com.dannyandson.tinyredstone.blocks.*;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.renderer.MultiBufferSource;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ResourceLocation;
 
 public class TFlipFlop extends AbstractGate {
 
@@ -20,12 +20,12 @@ public class TFlipFlop extends AbstractGate {
     private boolean input=false;
 
     @Override
-    public void render(PoseStack poseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay, float alpha) {
-        VertexConsumer builder = buffer.getBuffer((alpha==1.0)? RenderType.solid():RenderType.translucent());
+    public void render(MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay, float alpha){
+        IVertexBuilder builder = buffer.getBuffer((alpha==1.0)? RenderType.solid():RenderType.translucent());
         TextureAtlasSprite sprite = RenderHelper.getSprite(PanelTileRenderer.TEXTURE);
         TextureAtlasSprite sprite_gate = RenderHelper.getSprite(input?(output?TEXTURE_ON_ON:TEXTURE_ON_OFF):(output?TEXTURE_OFF_ON:TEXTURE_OFF_OFF));
 
-        com.dannyandson.tinygates.RenderHelper.drawQuarterSlab(poseStack,builder,sprite_gate,sprite,combinedLight,alpha);
+        com.dannyandson.tinygates.RenderHelper.drawQuarterSlab(matrixStack,builder,sprite_gate,sprite,combinedLight,alpha);
     }
 
     @Override
@@ -45,14 +45,14 @@ public class TFlipFlop extends AbstractGate {
     }
 
     @Override
-    public CompoundTag writeNBT() {
-        CompoundTag compoundTag = super.writeNBT();
+    public CompoundNBT writeNBT() {
+        CompoundNBT compoundTag = super.writeNBT();
         compoundTag.putBoolean("input",input);
         return compoundTag;
     }
 
     @Override
-    public void readNBT(CompoundTag compoundTag) {
+    public void readNBT(CompoundNBT compoundTag) {
         super.readNBT(compoundTag);
         input=compoundTag.getBoolean("input");
     }

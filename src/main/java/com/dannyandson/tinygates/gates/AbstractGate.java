@@ -7,7 +7,7 @@ import com.dannyandson.tinyredstone.blocks.PanelCellVoxelShape;
 import com.dannyandson.tinyredstone.blocks.PanelTile;
 import com.dannyandson.tinyredstone.blocks.PosInPanelCell;
 import com.dannyandson.tinyredstone.blocks.Side;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.CompoundNBT;
 
 public abstract class AbstractGate implements IPanelCell, IPanelCellInfoProvider {
 
@@ -29,24 +29,14 @@ public abstract class AbstractGate implements IPanelCell, IPanelCellInfoProvider
     }
 
     @Override
-    public boolean canAttachToBaseOnSide(Side side) {
-        return side==Side.BOTTOM;
-    }
-
-    @Override
-    public Side getBaseSide() {
-        return Side.BOTTOM;
-    }
-
-    @Override
-    public CompoundTag writeNBT() {
-        CompoundTag compoundTag = new CompoundTag();
+    public CompoundNBT writeNBT() {
+        CompoundNBT compoundTag = new CompoundNBT();
         compoundTag.putBoolean("output",output);
         return compoundTag;
     }
 
     @Override
-    public void readNBT(CompoundTag compoundTag) {
+    public void readNBT(CompoundNBT compoundTag) {
         output=compoundTag.getBoolean("output");
     }
 

@@ -1,11 +1,11 @@
 package com.dannyandson.tinygates.network;
 
 import com.dannyandson.tinygates.TinyGates;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.fmllegacy.network.NetworkDirection;
-import net.minecraftforge.fmllegacy.network.NetworkRegistry;
-import net.minecraftforge.fmllegacy.network.simple.SimpleChannel;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.network.NetworkDirection;
+import net.minecraftforge.fml.network.NetworkRegistry;
+import net.minecraftforge.fml.network.simple.SimpleChannel;
 
 public class ModNetworkHandler {
     private static SimpleChannel INSTANCE;
@@ -30,7 +30,7 @@ public class ModNetworkHandler {
                 .add();
     }
 
-    public static void sendToClient(Object packet, ServerPlayer player) {
+    public static void sendToClient(Object packet, ServerPlayerEntity player) {
         INSTANCE.sendTo(packet, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
     }
 

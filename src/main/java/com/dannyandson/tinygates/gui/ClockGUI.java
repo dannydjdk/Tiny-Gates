@@ -6,14 +6,14 @@ import com.dannyandson.tinyredstone.TinyRedstone;
 import com.dannyandson.tinyredstone.blocks.PanelTile;
 import com.dannyandson.tinyredstone.gui.ModWidget;
 import com.dannyandson.tinygates.network.ModNetworkHandler;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class ClockGUI extends Screen {
 
@@ -28,7 +28,7 @@ public class ClockGUI extends Screen {
     private final ResourceLocation GUI = new ResourceLocation(TinyRedstone.MODID, "textures/gui/transparent.png");
 
     protected ClockGUI(PanelTile panelTile, Integer cellIndex, Clock clockCell) {
-        super(new TranslatableComponent("tinygates:clockGUI"));
+        super(new TranslationTextComponent("tinygates:clockGUI"));
         this.panelTile = panelTile;
         this.cellIndex = cellIndex;
         this.clockCell = clockCell;
@@ -41,21 +41,21 @@ public class ClockGUI extends Screen {
         Integer redstoneTicks = clockCell.getTicks()/2;
 
 
-        this.tickCount = new ModWidget(relX,relY+21,WIDTH,20, Component.nullToEmpty(redstoneTicks.toString()))
+        this.tickCount = new ModWidget(relX,relY+21,WIDTH,20, ITextComponent.nullToEmpty(redstoneTicks.toString()))
                 .setTextHAlignment(ModWidget.HAlignment.CENTER).setTextVAlignment(ModWidget.VAlignment.MIDDLE);
 
-        addRenderableWidget(new ModWidget(relX-1, relY-1, WIDTH+2, HEIGHT+2, 0xAA000000));
-        addRenderableWidget(new ModWidget(relX, relY, WIDTH, HEIGHT, 0x88EEEEEE));
-        addRenderableWidget(new Button(relX + 35, relY + 48, 80, 20, new TranslatableComponent("tinyredstone.close"), button -> close()));
-        addRenderableWidget(this.tickCount);
+        addButton(new ModWidget(relX-1, relY-1, WIDTH+2, HEIGHT+2, 0xAA000000));
+        addButton(new ModWidget(relX, relY, WIDTH, HEIGHT, 0x88EEEEEE));
+        addButton(new Button(relX + 35, relY + 48, 80, 20, new TranslationTextComponent("tinyredstone.close"), button -> close()));
+        addButton(this.tickCount);
 
-        addRenderableWidget(new ModWidget(relX,relY+3,WIDTH-2,20,new TranslatableComponent("tinyredstone.gui.repeater.msg")))
+        addButton(new ModWidget(relX,relY+3,WIDTH-2,20,new TranslationTextComponent("tinyredstone.gui.repeater.msg")))
                 .setTextHAlignment(ModWidget.HAlignment.CENTER);
-        addRenderableWidget(new Button(relX + 10, relY + 15, 20, 20, Component.nullToEmpty("--"), button -> changeTicks(-20)));
-        addRenderableWidget(new Button(relX + 35, relY + 15, 20, 20, Component.nullToEmpty("-"), button -> changeTicks(-2)));
+        addButton(new Button(relX + 10, relY + 15, 20, 20, ITextComponent.nullToEmpty("--"), button -> changeTicks(-20)));
+        addButton(new Button(relX + 35, relY + 15, 20, 20, ITextComponent.nullToEmpty("-"), button -> changeTicks(-2)));
 
-        addRenderableWidget(new Button(relX + 95, relY + 15, 20, 20, Component.nullToEmpty("+"), button -> changeTicks(2)));
-        addRenderableWidget(new Button(relX + 125, relY + 15, 20, 20, Component.nullToEmpty("++"), button -> changeTicks(20)));
+        addButton(new Button(relX + 95, relY + 15, 20, 20, ITextComponent.nullToEmpty("+"), button -> changeTicks(2)));
+        addButton(new Button(relX + 125, relY + 15, 20, 20, ITextComponent.nullToEmpty("++"), button -> changeTicks(20)));
     }
 
     private void close() {
@@ -72,10 +72,10 @@ public class ClockGUI extends Screen {
         int relY = (this.height - HEIGHT) / 2;
 
         Integer redstoneTicks = clockCell.getTicks()/2;
-        this.removeWidget(this.tickCount);
-        this.tickCount = new ModWidget(relX,relY+21,WIDTH,20, Component.nullToEmpty(redstoneTicks.toString()))
+        this.buttons.remove(this.tickCount);
+        this.tickCount = new ModWidget(relX,relY+21,WIDTH,20, ITextComponent.nullToEmpty(redstoneTicks.toString()))
                 .setTextHAlignment(ModWidget.HAlignment.CENTER).setTextVAlignment(ModWidget.VAlignment.MIDDLE);
-        addRenderableWidget(this.tickCount);
+        addButton(this.tickCount);
     }
 
     @Override
@@ -84,10 +84,9 @@ public class ClockGUI extends Screen {
     }
 
     @Override
-    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        RenderSystem.setShaderTexture(0, GUI);
-        RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
-        this.minecraft.getTextureManager().bindForSetup(GUI);
+    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+        RenderSystem.blendColor(1.0F, 1.0F, 1.0F, 1.0F);
+        this.minecraft.getTextureManager().bind(GUI);
         int relX = (this.width - WIDTH) / 2;
         int relY = (this.height - HEIGHT) / 2;
         this.blit(matrixStack, relX, relY, 0, 0, WIDTH, HEIGHT);

@@ -4,10 +4,10 @@ import com.dannyandson.tinygates.gates.Clock;
 import com.dannyandson.tinyredstone.api.IPanelCell;
 import com.dannyandson.tinyredstone.blocks.PanelCellPos;
 import com.dannyandson.tinyredstone.blocks.PanelTile;
-import net.minecraft.core.BlockPos;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -23,14 +23,14 @@ public class ClockTickSync {
         this.ticks = ticks;
     }
 
-    public ClockTickSync(FriendlyByteBuf buffer)
+    public ClockTickSync(PacketBuffer buffer)
     {
         this.pos= buffer.readBlockPos();
         this.cellIndex=buffer.readInt();
         this.ticks=buffer.readInt();
     }
 
-    public void toBytes(FriendlyByteBuf buf)
+    public void toBytes(PacketBuffer buf)
     {
         buf.writeBlockPos(pos);
         buf.writeInt(cellIndex);
@@ -40,13 +40,15 @@ public class ClockTickSync {
     public boolean handle(Supplier<NetworkEvent.Context> ctx) {
 
         ctx.get().enqueueWork(()-> {
-            BlockEntity te =  ctx.get().getSender().getLevel().getBlockEntity(this.pos);
-            if (te instanceof PanelTile panelTile)
+            TileEntity te =  ctx.get().getSender().getLevel().getBlockEntity(this.pos);
+            if (te instanceof PanelTile)
             {
+                PanelTile panelTile = (PanelTile) te;
                 PanelCellPos cellPos = PanelCellPos.fromIndex((PanelTile) te,this.cellIndex);
                 IPanelCell cell = cellPos.getIPanelCell();
-                if (cell instanceof Clock clockCell)
+                if (cell instanceof Clock)
                 {
+                    Clock clockCell = (Clock) cell;
                     clockCell.setTicks(this.ticks);
                     panelTile.flagSync();
                 }
