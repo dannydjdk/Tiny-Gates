@@ -19,7 +19,7 @@ archivesBaseName = 'tinygates'
 def jei_version = '1.16.4:7.6.1.71'
 def top_version = '1.16:1.16-3.1.4-22'
 def hwyla_version = '1.10.11-B78_1.16.2'
-def tiny_redstone_version = "1.16:1.16.5-1.10.2"
+def tiny_redstone_version = "1.16:1.16.5-1.10.4"
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(8) // Mojang ships Java 8 to end users, so your mod should target Java 8.
 
