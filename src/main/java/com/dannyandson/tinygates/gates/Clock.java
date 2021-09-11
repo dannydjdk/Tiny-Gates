@@ -2,8 +2,10 @@ package com.dannyandson.tinygates.gates;
 
 import com.dannyandson.tinygates.TinyGates;
 import com.dannyandson.tinygates.gui.ClockGUI;
+import com.dannyandson.tinygates.network.ModNetworkHandler;
 import com.dannyandson.tinyredstone.api.IOverlayBlockInfo;
 import com.dannyandson.tinyredstone.blocks.*;
+import com.dannyandson.tinyredstone.network.PanelCellSync;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -58,6 +60,8 @@ public class Clock extends AbstractGate {
             } else if (this.output) {
                 this.output = false;
                 return true;
+            }else {
+                ModNetworkHandler.sendToClient(new PanelCellSync(cellPos.getPanelTile().getBlockPos(), cellPos.getIndex(), writeNBT()), cellPos.getPanelTile());
             }
         }
         return false;
@@ -79,6 +83,7 @@ public class Clock extends AbstractGate {
     public CompoundTag writeNBT() {
         CompoundTag compoundTag = super.writeNBT();
         compoundTag.putInt("ticks",ticks);
+        compoundTag.putInt("tick",tick);
         compoundTag.putBoolean("input",input);
         return compoundTag;
     }
@@ -87,6 +92,7 @@ public class Clock extends AbstractGate {
     public void readNBT(CompoundTag compoundTag) {
         super.readNBT(compoundTag);
         ticks=compoundTag.getInt("ticks");
+        tick=compoundTag.getInt("tick");
         input=compoundTag.getBoolean("input");
     }
 
