@@ -147,7 +147,7 @@ dependencies {
     // runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}") // Adds the full JEI mod as a runtime dependency
     // implementation fg.deobf("com.tterrag.registrate:Registrate:MC${mc_version}-${registrate_version}") // Adds registrate as a dependency
 
-    implementation fg.deobf("com.dannyandson.tinyredstone:Tiny-Redstone-1.17:1.17.1-2.2.4")
+    implementation fg.deobf("com.dannyandson.tinyredstone:Tiny-Redstone-1.17:1.17.1-2.2.5")
 
     implementation fg.deobf('curse.maven:theoneprobe-245211:3430022')
 
