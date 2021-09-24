@@ -36,7 +36,7 @@ public class Clock extends AbstractGate {
     public void render(MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay, float alpha){
        IVertexBuilder builder = buffer.getBuffer((alpha==1.0)? RenderType.solid():RenderType.translucent());
         TextureAtlasSprite sprite = RenderHelper.getSprite(PanelTileRenderer.TEXTURE);
-        TextureAtlasSprite sprite_gate = RenderHelper.getSprite(this.output?TEXTURES[TEXTURES.length-1]:TEXTURES[Math.floorDiv(tick*(TEXTURES.length-1),ticks)]);
+        TextureAtlasSprite sprite_gate = RenderHelper.getSprite(this.output?TEXTURES[TEXTURES.length-1]:TEXTURES[Math.min(Math.floorDiv(tick*(TEXTURES.length-1),ticks),TEXTURES.length-1)]);
 
         com.dannyandson.tinygates.RenderHelper.drawQuarterSlab(matrixStack,builder,sprite_gate,sprite,combinedLight,alpha);
     }
@@ -100,6 +100,9 @@ public class Clock extends AbstractGate {
         return this.ticks;
     }
     public void setTicks(Integer ticks){
+        if (ticks<this.tick)
+            this.tick=0;
+
         if (ticks<2)this.ticks=2;
         else if(ticks>200)this.ticks=200;
         else this.ticks=ticks;
