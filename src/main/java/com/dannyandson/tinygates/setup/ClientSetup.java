@@ -1,10 +1,12 @@
 package com.dannyandson.tinygates.setup;
 
 import com.dannyandson.tinygates.TinyGates;
+import com.dannyandson.tinygates.blocks.GateBlockRenderer;
 import com.dannyandson.tinygates.gates.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -49,4 +51,9 @@ public class ClientSetup {
         event.addSprite(EdgeDetector.TEXTURE_RISING_ON);
     }
 
+    @SubscribeEvent
+    public static void onRegisterRenderer(EntityRenderersEvent.RegisterRenderers event){
+        event.registerBlockEntityRenderer(Registration.AND_GATE_BLOCK_ENTITY.get(), GateBlockRenderer::new);
+        event.registerBlockEntityRenderer(Registration.OR_GATE_BLOCK_ENTITY.get(), GateBlockRenderer::new);
+    }
 }
