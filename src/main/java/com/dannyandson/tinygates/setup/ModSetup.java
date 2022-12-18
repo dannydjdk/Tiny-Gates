@@ -11,7 +11,7 @@ public class ModSetup {
     public static final CreativeModeTab ITEM_GROUP = new CreativeModeTab(TinyGates.MODID) {
         @Override
         public ItemStack makeIcon() {
-            return new ItemStack(Registration.TINY_AND_GATE_ITEM.get());
+            return new ItemStack(Registration.AND_GATE_ITEM.get());
         }
     };
 

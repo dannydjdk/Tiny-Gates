@@ -1,6 +1,6 @@
 package com.dannyandson.tinygates.gates;
 
-import com.dannyandson.tinygates.TinyGates;
+import com.dannyandson.tinygates.RenderHelper;
 import com.dannyandson.tinyredstone.api.IOverlayBlockInfo;
 import com.dannyandson.tinyredstone.blocks.*;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -9,15 +9,9 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 
 public class EdgeDetector extends AbstractGate {
-
-    public static ResourceLocation TEXTURE_RISING_ON = new ResourceLocation(TinyGates.MODID,"block/edge_detector_rising_on");
-    public static ResourceLocation TEXTURE_RISING_OFF = new ResourceLocation(TinyGates.MODID,"block/edge_detector_rising_off");
-    public static ResourceLocation TEXTURE_FALLING_ON = new ResourceLocation(TinyGates.MODID,"block/edge_detector_falling_on");
-    public static ResourceLocation TEXTURE_FALLING_OFF = new ResourceLocation(TinyGates.MODID,"block/edge_detector_falling_off");
 
     private boolean rising=true;
     private boolean input=false;
@@ -27,7 +21,7 @@ public class EdgeDetector extends AbstractGate {
     public void render(PoseStack poseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay, float alpha) {
         VertexConsumer builder = buffer.getBuffer((alpha==1.0)? RenderType.solid():RenderType.translucent());
         TextureAtlasSprite sprite = RenderHelper.getSprite(PanelTileRenderer.TEXTURE);
-        TextureAtlasSprite sprite_gate = RenderHelper.getSprite(output?(rising?TEXTURE_RISING_ON:TEXTURE_FALLING_ON):(rising?TEXTURE_RISING_OFF:TEXTURE_FALLING_OFF));
+        TextureAtlasSprite sprite_gate = RenderHelper.getSprite(output?(rising? RenderHelper.TEXTURE_RISING_ON: RenderHelper.TEXTURE_FALLING_ON):(rising? RenderHelper.TEXTURE_RISING_OFF: RenderHelper.TEXTURE_FALLING_OFF));
 
         com.dannyandson.tinygates.RenderHelper.drawQuarterSlab(poseStack,builder,sprite_gate,sprite,combinedLight,alpha);
     }

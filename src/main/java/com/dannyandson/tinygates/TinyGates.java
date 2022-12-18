@@ -4,7 +4,9 @@ import com.dannyandson.tinygates.setup.ClientSetup;
 import com.dannyandson.tinygates.setup.Registration;
 import com.dannyandson.tinygates.network.ModNetworkHandler;
 import com.dannyandson.tinygates.setup.ModSetup;
+import com.dannyandson.tinygates.setup.RegistrationTinyRedstone;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -23,6 +25,8 @@ public class TinyGates
     public TinyGates() {
 
         Registration.register();
+        if (ModList.get().isLoaded("tinyredstone"))
+            RegistrationTinyRedstone.register();
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(ModSetup::init);
 
@@ -40,7 +44,8 @@ public class TinyGates
     private void setup(final FMLCommonSetupEvent event)
     {
         // register everything
-        Registration.registerPanelCells();
+        if (ModList.get().isLoaded("tinyredstone"))
+            RegistrationTinyRedstone.registerPanelCells();
         ModNetworkHandler.registerMessages();
     }
 

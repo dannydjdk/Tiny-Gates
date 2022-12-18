@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "TTT",
+    "TST",
+    "TTT"
+  ],
+  "key": {
+    "T": {
+      "item": "minecraft:redstone"
+    },
+    "S":
+    {
+      "tag": "forge:stone"
+    }
+  },
+  "result": {
+    "item": "tinygates:or_gate_item",
+    "count": 4
+  }
+}
