@@ -1,9 +1,10 @@
 package com.dannyandson.tinygates.gates;
 
-import com.dannyandson.tinygates.TinyGates;
-import com.dannyandson.tinygates.gui.ClockGUI;
+import com.dannyandson.tinygates.RenderHelper;
+import com.dannyandson.tinygates.gui.TinyClockGUI;
 import com.dannyandson.tinygates.network.ModNetworkHandler;
 import com.dannyandson.tinyredstone.api.IOverlayBlockInfo;
+import com.dannyandson.tinyredstone.api.IPanelCell;
 import com.dannyandson.tinyredstone.blocks.*;
 import com.dannyandson.tinyredstone.network.PanelCellSync;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -11,23 +12,15 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.network.NetworkDirection;
 
 public class Clock extends AbstractGate {
 
-    public static ResourceLocation[] TEXTURES = {
-            new ResourceLocation(TinyGates.MODID, "block/clock_1"),
-            new ResourceLocation(TinyGates.MODID, "block/clock_2"),
-            new ResourceLocation(TinyGates.MODID, "block/clock_3"),
-            new ResourceLocation(TinyGates.MODID, "block/clock_4"),
-            new ResourceLocation(TinyGates.MODID, "block/clock_5"),
-            new ResourceLocation(TinyGates.MODID, "block/clock_6"),
-            new ResourceLocation(TinyGates.MODID, "block/clock_7"),
-            new ResourceLocation(TinyGates.MODID, "block/clock_8"),
-            new ResourceLocation(TinyGates.MODID, "block/clock_9")
-    };
     private int ticks = 20;
     private int tick = 0;
     private boolean input = false;
@@ -36,7 +29,7 @@ public class Clock extends AbstractGate {
     public void render(PoseStack poseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay, float alpha) {
         VertexConsumer builder = buffer.getBuffer((alpha==1.0)? RenderType.solid():RenderType.translucent());
         TextureAtlasSprite sprite = RenderHelper.getSprite(PanelTileRenderer.TEXTURE);
-        TextureAtlasSprite sprite_gate = RenderHelper.getSprite(this.output?TEXTURES[TEXTURES.length-1]:TEXTURES[Math.min(Math.floorDiv(tick*(TEXTURES.length-1),ticks),TEXTURES.length-1)]);
+        TextureAtlasSprite sprite_gate = RenderHelper.getSprite(this.output? RenderHelper.TEXTURES_CLOCK[RenderHelper.TEXTURES_CLOCK.length-1]: RenderHelper.TEXTURES_CLOCK[Math.min(Math.floorDiv(tick*(RenderHelper.TEXTURES_CLOCK.length-1),ticks), RenderHelper.TEXTURES_CLOCK.length-1)]);
 
         com.dannyandson.tinygates.RenderHelper.drawQuarterSlab(poseStack,builder,sprite_gate,sprite,combinedLight,alpha);
     }
@@ -61,7 +54,7 @@ public class Clock extends AbstractGate {
                 this.output = false;
                 return true;
             }else {
-                ModNetworkHandler.sendToClient(new PanelCellSync(cellPos.getPanelTile().getBlockPos(), cellPos.getIndex(), writeNBT()), cellPos.getPanelTile());
+                sendToClient(cellPos);
             }
         }
         return false;
@@ -74,7 +67,7 @@ public class Clock extends AbstractGate {
     public boolean onBlockActivated(PanelCellPos cellPos, PanelCellSegment segmentClicked, Player player) {
         PanelTile panelTile = cellPos.getPanelTile();
         if (panelTile.getLevel().isClientSide)
-            ClockGUI.open(panelTile, cellPos.getIndex(), this);
+            TinyClockGUI.open(panelTile, cellPos.getIndex(), this);
         return false;
     }
 
@@ -115,4 +108,29 @@ public class Clock extends AbstractGate {
             overlayBlockInfo.addInfo("Locked");
         }
     }
+
+    public void sendToClient(PanelCellPos cellPos) {
+        PanelTile panelTile = cellPos.getPanelTile();
+        BlockPos pos = panelTile.getBlockPos();
+        for (Player player : panelTile.getLevel().players()) {
+            if (player instanceof ServerPlayer && player.distanceToSqr(pos.getX(),pos.getY(),pos.getZ()) < 64d) {
+                ModNetworkHandler.getINSTANCE().sendTo(new PanelCellSync(pos,cellPos.getIndex(),writeNBT()), ((ServerPlayer) player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+            }
+        }
+    }
+
+
+    public static void clockTickSync(BlockEntity blockEntity,int cellIndex, int ticks){
+        if (blockEntity instanceof PanelTile panelTile)
+        {
+            PanelCellPos cellPos = PanelCellPos.fromIndex(panelTile,cellIndex);
+            IPanelCell cell = cellPos.getIPanelCell();
+            if (cell instanceof Clock clockCell)
+            {
+                clockCell.setTicks(ticks);
+                panelTile.flagSync();
+            }
+        }
+    }
+
 }

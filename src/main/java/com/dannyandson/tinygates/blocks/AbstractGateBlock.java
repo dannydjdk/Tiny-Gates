@@ -1,17 +1,14 @@
 package com.dannyandson.tinygates.blocks;
 
 import com.dannyandson.tinygates.setup.Registration;
-import com.dannyandson.tinyredstone.blocks.Side;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -23,7 +20,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import static net.minecraft.core.Direction.*;
+import static net.minecraft.core.Direction.Axis;
+import static net.minecraft.core.Direction.DOWN;
 
 public abstract class AbstractGateBlock extends BaseEntityBlock {
 
@@ -76,7 +74,7 @@ public abstract class AbstractGateBlock extends BaseEntityBlock {
     @Override
     public boolean canConnectRedstone(BlockState state, BlockGetter level, BlockPos pos, @Nullable Direction direction) {
         if (direction != null)
-            return canConnectRedstone(getSideFromDirection(direction, state));
+            return canConnectRedstone(getSideFromDirection(direction.getOpposite(), state));
         return true;
     }
 
@@ -103,7 +101,7 @@ public abstract class AbstractGateBlock extends BaseEntityBlock {
     @Override
     public int getDirectSignal(@NotNull BlockState blockState, BlockGetter blockGetter, @NotNull BlockPos pos, @NotNull Direction direction) {
         if (blockGetter.getBlockEntity(pos) instanceof AbstractGateBlockEntity gateEntity) {
-            return gateEntity.getDirectSignal(getSideFromDirection(direction, blockState));
+            return gateEntity.getDirectSignal(getSideFromDirection(direction.getOpposite(), blockState));
         }
         return super.getDirectSignal(blockState, blockGetter, pos, direction);
     }

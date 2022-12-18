@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "TRT",
+    "RSR",
+    "TRT"
+  ],
+  "key": {
+    "T": {
+      "item": "minecraft:redstone_torch"
+    },
+    "R": {
+      "item": "minecraft:lever"
+    },
+    "S":
+    {
+      "tag": "forge:stone"
+    }
+  },
+  "result": {
+    "item": "tinygates:rs_latch_item",
+    "count": 4
+  }
+}

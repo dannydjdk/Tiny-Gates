@@ -1,9 +1,7 @@
 package com.dannyandson.tinygates.network;
 
+import com.dannyandson.tinygates.blocks.ClockBlockEntity;
 import com.dannyandson.tinygates.gates.Clock;
-import com.dannyandson.tinyredstone.api.IPanelCell;
-import com.dannyandson.tinyredstone.blocks.PanelCellPos;
-import com.dannyandson.tinyredstone.blocks.PanelTile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -41,17 +39,14 @@ public class ClockTickSync {
 
         ctx.get().enqueueWork(()-> {
             BlockEntity te =  ctx.get().getSender().getLevel().getBlockEntity(this.pos);
-            if (te instanceof PanelTile panelTile)
-            {
-                PanelCellPos cellPos = PanelCellPos.fromIndex((PanelTile) te,this.cellIndex);
-                IPanelCell cell = cellPos.getIPanelCell();
-                if (cell instanceof Clock clockCell)
-                {
-                    clockCell.setTicks(this.ticks);
-                    panelTile.flagSync();
+            if (cellIndex==-1){
+                if (te instanceof ClockBlockEntity clockBlockEntity){
+                    clockBlockEntity.setTicks(this.ticks);
                 }
+            } else {
+                Clock.clockTickSync(te,cellIndex,ticks);
             }
-            ctx.get().setPacketHandled(true);
+             ctx.get().setPacketHandled(true);
         });
         return true;
     }

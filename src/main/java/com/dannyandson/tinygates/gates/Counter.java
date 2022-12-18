@@ -1,6 +1,6 @@
 package com.dannyandson.tinygates.gates;
 
-import com.dannyandson.tinygates.TinyGates;
+import com.dannyandson.tinygates.RenderHelper;
 import com.dannyandson.tinyredstone.api.IOverlayBlockInfo;
 import com.dannyandson.tinyredstone.blocks.*;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -9,28 +9,9 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 
 public class Counter extends AbstractGate {
 
-    public static ResourceLocation[] TEXTURES = {
-            new ResourceLocation(TinyGates.MODID, "block/counter_0"),
-            new ResourceLocation(TinyGates.MODID, "block/counter_1"),
-            new ResourceLocation(TinyGates.MODID, "block/counter_2"),
-            new ResourceLocation(TinyGates.MODID, "block/counter_3"),
-            new ResourceLocation(TinyGates.MODID, "block/counter_4"),
-            new ResourceLocation(TinyGates.MODID, "block/counter_5"),
-            new ResourceLocation(TinyGates.MODID, "block/counter_6"),
-            new ResourceLocation(TinyGates.MODID, "block/counter_7"),
-            new ResourceLocation(TinyGates.MODID, "block/counter_8"),
-            new ResourceLocation(TinyGates.MODID, "block/counter_9"),
-             new ResourceLocation(TinyGates.MODID, "block/counter_10"),
-             new ResourceLocation(TinyGates.MODID, "block/counter_11"),
-             new ResourceLocation(TinyGates.MODID, "block/counter_12"),
-             new ResourceLocation(TinyGates.MODID, "block/counter_13"),
-             new ResourceLocation(TinyGates.MODID, "block/counter_14"),
-             new ResourceLocation(TinyGates.MODID, "block/counter_15")
-    };
     private int output = 0;
     private boolean input = false;
 
@@ -38,7 +19,7 @@ public class Counter extends AbstractGate {
     public void render(PoseStack poseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay, float alpha) {
         VertexConsumer builder = buffer.getBuffer((alpha==1.0)? RenderType.solid():RenderType.translucent());
         TextureAtlasSprite sprite = RenderHelper.getSprite(PanelTileRenderer.TEXTURE);
-        TextureAtlasSprite sprite_gate = RenderHelper.getSprite(TEXTURES[output]);
+        TextureAtlasSprite sprite_gate = RenderHelper.getSprite(RenderHelper.TEXTURES_COUNTER[output]);
 
         com.dannyandson.tinygates.RenderHelper.drawQuarterSlab(poseStack,builder,sprite_gate,sprite,combinedLight,alpha);
     }

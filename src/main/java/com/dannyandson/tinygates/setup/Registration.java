@@ -1,18 +1,11 @@
 package com.dannyandson.tinygates.setup;
 
 import com.dannyandson.tinygates.TinyGates;
-import com.dannyandson.tinygates.blocks.ANDGateBlock;
-import com.dannyandson.tinygates.blocks.ANDGateBlockEntity;
-import com.dannyandson.tinygates.blocks.ORGateBlock;
-import com.dannyandson.tinygates.blocks.ORGateBlockEntity;
-import com.dannyandson.tinygates.gates.*;
+import com.dannyandson.tinygates.blocks.*;
 import com.dannyandson.tinygates.items.GateBlockItem;
-import com.dannyandson.tinygates.items.PanelCellGateItem;
-import com.dannyandson.tinyredstone.TinyRedstone;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
@@ -24,26 +17,51 @@ public class Registration {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, TinyGates.MODID);
     private static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, TinyGates.MODID);
 
-    public static final RegistryObject<Item> TINY_AND_GATE_ITEM = ITEMS.register("tiny_and_gate", PanelCellGateItem::new);
-    public static final RegistryObject<Item> TINY_OR_GATE_ITEM = ITEMS.register("tiny_or_gate", PanelCellGateItem::new);
-    public static final RegistryObject<Item> TINY_XOR_GATE_ITEM = ITEMS.register("tiny_xor_gate", PanelCellGateItem::new);
-    public static final RegistryObject<Item> TINY_NOT_GATE_ITEM = ITEMS.register("tiny_not_gate", PanelCellGateItem::new);
-    public static final RegistryObject<Item> TINY_CLOCK_ITEM = ITEMS.register("tiny_clock", PanelCellGateItem::new);
-    public static final RegistryObject<Item> TINY_COUNTER_ITEM = ITEMS.register("tiny_counter", PanelCellGateItem::new);
-    public static final RegistryObject<Item> TINY_RS_LATCH_ITEM = ITEMS.register("tiny_rs_latch", PanelCellGateItem::new);
-    public static final RegistryObject<Item> TINY_EDGE_DETECTOR_ITEM = ITEMS.register("tiny_edge_detector", PanelCellGateItem::new);
-    public static final RegistryObject<Item> TINY_T_FLIP_FLOP_ITEM = ITEMS.register("tiny_t_flip_flop", PanelCellGateItem::new);
-
 
     public static final RegistryObject<ANDGateBlock> AND_GATE_BLOCK = BLOCKS.register("and_gate_block", ANDGateBlock::new);
     public static final RegistryObject<Item> AND_GATE_ITEM = ITEMS.register("and_gate_item",()->new GateBlockItem(AND_GATE_BLOCK.get()));
     public static final RegistryObject<BlockEntityType<ANDGateBlockEntity>> AND_GATE_BLOCK_ENTITY =
             BLOCK_ENTITIES.register("and_gate_block", () -> BlockEntityType.Builder.of(ANDGateBlockEntity::new, AND_GATE_BLOCK.get()).build(null));
 
+    public static final RegistryObject<ClockBlock> CLOCK_BLOCK = BLOCKS.register("clock_block", ClockBlock::new);
+    public static final RegistryObject<Item> CLOCK_ITEM = ITEMS.register("clock_item",()-> new GateBlockItem(CLOCK_BLOCK.get()));
+    public static final RegistryObject<BlockEntityType<ClockBlockEntity>> CLOCK_BLOCK_ENTITY =
+            BLOCK_ENTITIES.register("clock_block", () -> BlockEntityType.Builder.of(ClockBlockEntity::new, CLOCK_BLOCK.get()).build(null));
+
+    public static final RegistryObject<CounterBlock> COUNTER_BLOCK = BLOCKS.register("counter_block", CounterBlock::new);
+    public static final RegistryObject<Item> COUNTER_ITEM = ITEMS.register("counter_item",()-> new GateBlockItem(COUNTER_BLOCK.get()));
+    public static final RegistryObject<BlockEntityType<CounterBlockEntity>> COUNTER_BLOCK_ENTITY =
+            BLOCK_ENTITIES.register("counter_block", () -> BlockEntityType.Builder.of(CounterBlockEntity::new, COUNTER_BLOCK.get()).build(null));
+
+    public static final RegistryObject<EdgeDetectorBlock> EDGE_DETECTOR_BLOCK = BLOCKS.register("edge_detector_block", EdgeDetectorBlock::new);
+    public static final RegistryObject<Item> EDGE_DETECTOR_ITEM = ITEMS.register("edge_detector_item",()-> new GateBlockItem(EDGE_DETECTOR_BLOCK.get()));
+    public static final RegistryObject<BlockEntityType<EdgeDetectorBlockEntity>> EDGE_DETECTOR_BLOCK_ENTITY =
+            BLOCK_ENTITIES.register("edge_detector_block", () -> BlockEntityType.Builder.of(EdgeDetectorBlockEntity::new, EDGE_DETECTOR_BLOCK.get()).build(null));
+
+    public static final RegistryObject<NOTGateBlock> NOT_GATE_BLOCK = BLOCKS.register("not_gate_block", NOTGateBlock::new);
+    public static final RegistryObject<Item> NOT_GATE_ITEM = ITEMS.register("not_gate_item",()-> new GateBlockItem(NOT_GATE_BLOCK.get()));
+    public static final RegistryObject<BlockEntityType<NOTGateBlockEntity>> NOT_GATE_BLOCK_ENTITY =
+            BLOCK_ENTITIES.register("not_gate_block", () -> BlockEntityType.Builder.of(NOTGateBlockEntity::new, NOT_GATE_BLOCK.get()).build(null));
+
     public static final RegistryObject<ORGateBlock> OR_GATE_BLOCK = BLOCKS.register("or_gate_block", ORGateBlock::new);
     public static final RegistryObject<Item> OR_GATE_ITEM = ITEMS.register("or_gate_item",()-> new GateBlockItem(OR_GATE_BLOCK.get()));
     public static final RegistryObject<BlockEntityType<ORGateBlockEntity>> OR_GATE_BLOCK_ENTITY =
             BLOCK_ENTITIES.register("or_gate_block", () -> BlockEntityType.Builder.of(ORGateBlockEntity::new, OR_GATE_BLOCK.get()).build(null));
+
+    public static final RegistryObject<RSLatchBlock> RS_LATCH_BLOCK = BLOCKS.register("rs_latch_block", RSLatchBlock::new);
+    public static final RegistryObject<Item> RS_LATCH_ITEM = ITEMS.register("rs_latch_item",()-> new GateBlockItem(RS_LATCH_BLOCK.get()));
+    public static final RegistryObject<BlockEntityType<RSLatchBlockEntity>> RS_LATCH_BLOCK_ENTITY =
+            BLOCK_ENTITIES.register("rs_latch_block", () -> BlockEntityType.Builder.of(RSLatchBlockEntity::new, RS_LATCH_BLOCK.get()).build(null));
+
+    public static final RegistryObject<TFlipFlopBlock> T_FLIP_FLOP_BLOCK = BLOCKS.register("t_flip_flop_block", TFlipFlopBlock::new);
+    public static final RegistryObject<Item> T_FLIP_FLOP_ITEM = ITEMS.register("t_flip_flop_item",()-> new GateBlockItem(T_FLIP_FLOP_BLOCK.get()));
+    public static final RegistryObject<BlockEntityType<TFlipFlopBlockEntity>> T_FLIP_FLOP_BLOCK_ENTITY =
+            BLOCK_ENTITIES.register("t_flip_flop_block", () -> BlockEntityType.Builder.of(TFlipFlopBlockEntity::new, T_FLIP_FLOP_BLOCK.get()).build(null));
+
+    public static final RegistryObject<XORGateBlock> XOR_GATE_BLOCK = BLOCKS.register("xor_gate_block", XORGateBlock::new);
+    public static final RegistryObject<Item> XOR_GATE_ITEM = ITEMS.register("xor_gate_item",()-> new GateBlockItem(XOR_GATE_BLOCK.get()));
+    public static final RegistryObject<BlockEntityType<XORGateBlockEntity>> XOR_GATE_BLOCK_ENTITY =
+            BLOCK_ENTITIES.register("xor_gate_block", () -> BlockEntityType.Builder.of(XORGateBlockEntity::new, XOR_GATE_BLOCK.get()).build(null));
 
 
     public static final DirectionProperty GATE_DIRECTION = DirectionProperty.create("gate_direction");
@@ -54,19 +72,6 @@ public class Registration {
         ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
         BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         BLOCK_ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
-    }
-
-    //called at FMLCommonSetupEvent in ModSetup
-    public static void registerPanelCells(){
-        TinyRedstone.registerPanelCell(ANDGate.class, TINY_AND_GATE_ITEM.get());
-        TinyRedstone.registerPanelCell(ORGate.class, TINY_OR_GATE_ITEM.get());
-        TinyRedstone.registerPanelCell(XORGate.class, TINY_XOR_GATE_ITEM.get());
-        TinyRedstone.registerPanelCell(NOTGate.class, TINY_NOT_GATE_ITEM.get());
-        TinyRedstone.registerPanelCell(Clock.class,TINY_CLOCK_ITEM.get());
-        TinyRedstone.registerPanelCell(Counter.class, TINY_COUNTER_ITEM.get());
-        TinyRedstone.registerPanelCell(RSLatch.class, TINY_RS_LATCH_ITEM.get());
-        TinyRedstone.registerPanelCell(EdgeDetector.class,TINY_EDGE_DETECTOR_ITEM.get());
-        TinyRedstone.registerPanelCell(TFlipFlop.class, TINY_T_FLIP_FLOP_ITEM.get());
     }
 
 

@@ -1,0 +1,48 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "top": "tinygates:block/clock_1",
+    "blank": "tinygates:block/panel_blank"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        2,
+        16
+      ],
+      "shade": false,
+      "faces": {
+        "down": {
+          "texture": "#blank",
+          "tintindex": 0
+        },
+        "up": {
+          "texture": "#top",
+          "tintindex": 0
+        },
+        "east": {
+          "texture": "#blank",
+          "tintindex": 0
+        },
+        "west": {
+          "texture": "#blank",
+          "tintindex": 0
+        },
+        "north": {
+          "texture": "#blank",
+          "tintindex": 0
+        },
+        "south": {
+          "texture": "#blank",
+          "tintindex": 0
+        }
+      }
+    }
+  ]
+}

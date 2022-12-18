@@ -1,43 +1,34 @@
 package com.dannyandson.tinygates.gui;
 
-import com.dannyandson.tinygates.gates.Clock;
-import com.dannyandson.tinygates.network.ClockTickSync;
-import com.dannyandson.tinyredstone.TinyRedstone;
-import com.dannyandson.tinyredstone.blocks.PanelTile;
-import com.dannyandson.tinyredstone.gui.ModWidget;
-import com.dannyandson.tinygates.network.ModNetworkHandler;
+import com.dannyandson.tinygates.TinyGates;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
-public class ClockGUI extends Screen {
+public abstract class ClockGUI extends Screen {
 
     private static final int WIDTH = 150;
     private static final int HEIGHT = 70;
 
-    private final PanelTile panelTile;
-    private final Integer cellIndex;
-    private final Clock clockCell;
     private ModWidget tickCount;
 
-    private final ResourceLocation GUI = new ResourceLocation(TinyRedstone.MODID, "textures/gui/transparent.png");
+    private final ResourceLocation GUI = new ResourceLocation(TinyGates.MODID, "textures/gui/transparent.png");
 
-    protected ClockGUI(PanelTile panelTile, Integer cellIndex, Clock clockCell) {
-        super(Component.translatable("tinygates:clockGUI"));
-        this.panelTile = panelTile;
-        this.cellIndex = cellIndex;
-        this.clockCell = clockCell;
+    protected ClockGUI(Component component) {
+        super(component);
     }
+
+    protected abstract Integer getTicks();
+    protected abstract void setTicks(int ticks);
 
     @Override
     protected void init() {
         int relX = (this.width - WIDTH) / 2;
         int relY = (this.height - HEIGHT) / 2;
-        Integer redstoneTicks = clockCell.getTicks()/2;
+        Integer redstoneTicks = this.getTicks()/2;
 
 
         this.tickCount = new ModWidget(relX,relY+21,WIDTH,20, Component.nullToEmpty(redstoneTicks.toString()))
@@ -61,18 +52,16 @@ public class ClockGUI extends Screen {
         minecraft.setScreen(null);
     }
 
-    private void changeTicks(int change)
-    {
-        clockCell.setTicks(clockCell.getTicks()+change);
+    private void changeTicks(int change) {
 
-        ModNetworkHandler.sendToServer(new ClockTickSync(panelTile.getBlockPos(),cellIndex, clockCell.getTicks()));
+        setTicks(getTicks() + change);
 
         int relX = (this.width - WIDTH) / 2;
         int relY = (this.height - HEIGHT) / 2;
 
-        Integer redstoneTicks = clockCell.getTicks()/2;
+        Integer redstoneTicks = getTicks() / 2;
         this.removeWidget(this.tickCount);
-        this.tickCount = new ModWidget(relX,relY+21,WIDTH,20, Component.nullToEmpty(redstoneTicks.toString()))
+        this.tickCount = new ModWidget(relX, relY + 21, WIDTH, 20, Component.nullToEmpty(redstoneTicks.toString()))
                 .setTextHAlignment(ModWidget.HAlignment.CENTER).setTextVAlignment(ModWidget.VAlignment.MIDDLE);
         addRenderableWidget(this.tickCount);
     }
@@ -94,9 +83,5 @@ public class ClockGUI extends Screen {
         super.render(matrixStack,mouseX, mouseY, partialTicks);
     }
 
-
-    public static void open(PanelTile panelTile, Integer cellIndex, Clock clockCell) {
-        Minecraft.getInstance().setScreen(new ClockGUI(panelTile, cellIndex, clockCell));
-    }
 
 }

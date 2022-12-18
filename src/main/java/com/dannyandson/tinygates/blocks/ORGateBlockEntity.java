@@ -1,8 +1,7 @@
 package com.dannyandson.tinygates.blocks;
 
-import com.dannyandson.tinygates.gates.ORGate;
+import com.dannyandson.tinygates.RenderHelper;
 import com.dannyandson.tinygates.setup.Registration;
-import com.dannyandson.tinyredstone.blocks.Side;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -18,8 +17,8 @@ public class ORGateBlockEntity extends AbstractGateBlockEntity{
     @Override
     public ResourceLocation getTexture() {
         if (this.output>0)
-            return ORGate.TEXTURE_OR_GATE_ON;
-        return ORGate.TEXTURE_OR_GATE_OFF;
+            return RenderHelper.TEXTURE_OR_GATE_ON;
+        return RenderHelper.TEXTURE_OR_GATE_OFF;
     }
 
     /**

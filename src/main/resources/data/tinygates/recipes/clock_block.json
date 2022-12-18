@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " T ",
+    "TST",
+    " T "
+  ],
+  "key": {
+    "T": {
+      "item": "minecraft:repeater"
+    },
+    "S":
+    {
+      "tag": "forge:stone"
+    }
+  },
+  "result": {
+    "item": "tinygates:clock_item",
+    "count": 4
+  }
+}

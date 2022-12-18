@@ -1,6 +1,5 @@
 package com.dannyandson.tinygates.blocks;
 
-import com.dannyandson.tinyredstone.blocks.Side;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -17,6 +16,6 @@ public class ANDGateBlock extends AbstractGateBlock{
 
     @Override
     public boolean canConnectRedstone(Side side) {
-        return side!=Side.TOP && side!=Side.BOTTOM;
+        return side == Side.LEFT || side == Side.RIGHT || side == Side.FRONT;
     }
 }

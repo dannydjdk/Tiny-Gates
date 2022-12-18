@@ -1,7 +1,6 @@
 package com.dannyandson.tinygates.blocks;
 
 import com.dannyandson.tinygates.setup.Registration;
-import com.dannyandson.tinyredstone.blocks.Side;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
