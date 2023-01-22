@@ -1,5 +1,5 @@
 {
-  "itemGroup.tinygates": "Tiny Gates",
+  "tinygates": "Tiny Gates",
   "tinygates.fullsizegatemessage": "Full sized redstone gate. Can be placed in any orientation, including vertically.",
   "item.tinygates.tiny_and_gate" : "Tiny AND Gate",
   "message.item.tinygates.tiny_and_gate": "Outputs to front when a signal is received to both left AND right side.",
@@ -36,5 +36,7 @@
   "item.tinygates.tiny_edge_detector" : "Tiny Edge Detector",
   "message.item.tinygates.tiny_edge_detector": "Outputs redstone pulse at start (rising edge) or stop (falling edge) of redstone signal to back input.\nRight click to toggle edge to detect (rising or falling).",
   "block.tinygates.edge_detector_block" : "Edge Detector",
-  "message.block.tinygates.edge_detector_block": "Outputs redstone pulse at start (rising edge) or stop (falling edge) of redstone signal to back input.\nRight click to toggle edge to detect (rising or falling)."
+  "message.block.tinygates.edge_detector_block": "Outputs redstone pulse at start (rising edge) or stop (falling edge) of redstone signal to back input.\nRight click to toggle edge to detect (rising or falling).",
+  "tinygates.close": "Close",
+  "tinygates.gui.clock.msg": "Clock Cycle Length (10 ticks/second)"
 }

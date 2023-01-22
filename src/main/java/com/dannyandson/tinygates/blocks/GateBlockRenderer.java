@@ -5,7 +5,7 @@ import com.dannyandson.tinygates.TinyGates;
 import com.dannyandson.tinygates.setup.Registration;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -34,35 +34,35 @@ public class GateBlockRenderer implements BlockEntityRenderer<AbstractGateBlockE
         switch (facing)
         {
             case UP:
-                poseStack.mulPose(Vector3f.XP.rotationDegrees(180));
+                poseStack.mulPose(Axis.XP.rotationDegrees(180));
                 poseStack.translate(0,-1,-1);
                 break;
             case NORTH:
-                poseStack.mulPose(Vector3f.XP.rotationDegrees(90));
+                poseStack.mulPose(Axis.XP.rotationDegrees(90));
                 poseStack.translate(0,0,-1);
                 break;
             case EAST:
-                poseStack.mulPose(Vector3f.ZP.rotationDegrees(90));
+                poseStack.mulPose(Axis.ZP.rotationDegrees(90));
                 poseStack.translate(0,-1,0);
                 break;
             case SOUTH:
-                poseStack.mulPose(Vector3f.XP.rotationDegrees(-90));
+                poseStack.mulPose(Axis.XP.rotationDegrees(-90));
                 poseStack.translate(0,-1,0);
                 break;
             case WEST:
-                poseStack.mulPose(Vector3f.ZP.rotationDegrees(-90));
+                poseStack.mulPose(Axis.ZP.rotationDegrees(-90));
                 poseStack.translate(-1,0,0);
                 break;
         }
 
         if ((gateDirection==UP&&facing==NORTH) || (gateDirection==NORTH&&facing==DOWN)  || (gateDirection==NORTH&&facing==WEST) || (gateDirection==SOUTH&&facing==UP)||(facing==EAST&&gateDirection==NORTH)||(facing==SOUTH&&gateDirection==DOWN)) {
-            poseStack.mulPose(Vector3f.YP.rotationDegrees(180));
+            poseStack.mulPose(Axis.YP.rotationDegrees(180));
             poseStack.translate(-1, 0, -1);
         }else if (gateDirection==EAST||(facing==EAST&&gateDirection==UP)||(facing==WEST&&gateDirection==DOWN)){
-            poseStack.mulPose(Vector3f.YP.rotationDegrees(90));
+            poseStack.mulPose(Axis.YP.rotationDegrees(90));
             poseStack.translate(-1,0,0);
         }else if (gateDirection==WEST||(facing==EAST&&gateDirection==DOWN||(facing==WEST&&gateDirection==UP))) {
-            poseStack.mulPose(Vector3f.YP.rotationDegrees(270));
+            poseStack.mulPose(Axis.YP.rotationDegrees(270));
             poseStack.translate(0, 0, -1);
         }
 
@@ -72,27 +72,27 @@ public class GateBlockRenderer implements BlockEntityRenderer<AbstractGateBlockE
         int color = 0xFFFFFFFF;
 
         poseStack.pushPose();
-        poseStack.mulPose(Vector3f.XP.rotationDegrees(270));
+        poseStack.mulPose(Axis.XP.rotationDegrees(270));
         poseStack.translate(0, -1, 0.125);
         RenderHelper.drawRectangle(builder, poseStack, 0, 1, 0, 1, sprite_top.getU1(), sprite_top.getU0(), sprite_top.getV0(), sprite_top.getV1(), combinedLight, color, 1.0f);
 
-        poseStack.mulPose(Vector3f.XP.rotationDegrees(90));
+        poseStack.mulPose(Axis.XP.rotationDegrees(90));
         poseStack.translate(0, -0.125, 0);
         RenderHelper.drawRectangle(builder, poseStack, 0, 1, 0, .125f, sprite, combinedLight, 1.0f);
 
-        poseStack.mulPose(Vector3f.YP.rotationDegrees(90));
+        poseStack.mulPose(Axis.YP.rotationDegrees(90));
         poseStack.translate(0, 0, 1);
         RenderHelper.drawRectangle(builder, poseStack, 0, 1, 0, .125f, sprite, combinedLight, 1.0f);
 
-        poseStack.mulPose(Vector3f.YP.rotationDegrees(90));
+        poseStack.mulPose(Axis.YP.rotationDegrees(90));
         poseStack.translate(0, 0, 1);
         RenderHelper.drawRectangle(builder, poseStack, 0, 1, 0, .125f, sprite, combinedLight, 1.0f);
 
-        poseStack.mulPose(Vector3f.YP.rotationDegrees(90));
+        poseStack.mulPose(Axis.YP.rotationDegrees(90));
         poseStack.translate(0, 0, 1);
         RenderHelper.drawRectangle(builder, poseStack, 0, 1, 0, .125f, sprite, combinedLight, 1.0f);
 
-        poseStack.mulPose(Vector3f.XP.rotationDegrees(90));
+        poseStack.mulPose(Axis.XP.rotationDegrees(90));
         poseStack.translate(0, -1, 0);
         RenderHelper.drawRectangle(builder, poseStack, 0, 1, 0, 1, sprite, combinedLight, 1.0f);
 

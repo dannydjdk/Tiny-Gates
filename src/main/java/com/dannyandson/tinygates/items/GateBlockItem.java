@@ -1,6 +1,5 @@
 package com.dannyandson.tinygates.items;
 
-import com.dannyandson.tinygates.setup.ModSetup;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -16,7 +15,7 @@ import java.util.List;
 
 public class GateBlockItem extends BlockItem {
     public GateBlockItem(Block block) {
-        super(block,new Item.Properties().tab(ModSetup.ITEM_GROUP));
+        super(block,new Item.Properties());
     }
 
 

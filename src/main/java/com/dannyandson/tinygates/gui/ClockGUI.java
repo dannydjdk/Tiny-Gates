@@ -36,16 +36,16 @@ public abstract class ClockGUI extends Screen {
 
         addRenderableWidget(new ModWidget(relX-1, relY-1, WIDTH+2, HEIGHT+2, 0xAA000000));
         addRenderableWidget(new ModWidget(relX, relY, WIDTH, HEIGHT, 0x88EEEEEE));
-        addRenderableWidget(new Button(relX + 35, relY + 48, 80, 20, Component.translatable("tinyredstone.close"), button -> close()));
+        addRenderableWidget(ModWidget.buildButton(relX + 35, relY + 48, 80, 20, Component.translatable("tinygates.close"), button -> close()));
         addRenderableWidget(this.tickCount);
 
-        addRenderableWidget(new ModWidget(relX,relY+3,WIDTH-2,20,Component.translatable("tinyredstone.gui.repeater.msg")))
+        addRenderableWidget(new ModWidget(relX,relY+3,WIDTH-2,20,Component.translatable("tinygates.gui.clock.msg")))
                 .setTextHAlignment(ModWidget.HAlignment.CENTER);
-        addRenderableWidget(new Button(relX + 10, relY + 15, 20, 20, Component.nullToEmpty("--"), button -> changeTicks(-20)));
-        addRenderableWidget(new Button(relX + 35, relY + 15, 20, 20, Component.nullToEmpty("-"), button -> changeTicks(-2)));
+        addRenderableWidget(ModWidget.buildButton(relX + 10, relY + 15, 20, 20, Component.nullToEmpty("--"), button -> changeTicks(-20)));
+        addRenderableWidget(ModWidget.buildButton(relX + 35, relY + 15, 20, 20, Component.nullToEmpty("-"), button -> changeTicks(-2)));
 
-        addRenderableWidget(new Button(relX + 95, relY + 15, 20, 20, Component.nullToEmpty("+"), button -> changeTicks(2)));
-        addRenderableWidget(new Button(relX + 125, relY + 15, 20, 20, Component.nullToEmpty("++"), button -> changeTicks(20)));
+        addRenderableWidget(ModWidget.buildButton(relX + 95, relY + 15, 20, 20, Component.nullToEmpty("+"), button -> changeTicks(2)));
+        addRenderableWidget(ModWidget.buildButton(relX + 125, relY + 15, 20, 20, Component.nullToEmpty("++"), button -> changeTicks(20)));
     }
 
     private void close() {

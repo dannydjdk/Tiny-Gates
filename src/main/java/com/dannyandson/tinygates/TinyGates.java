@@ -28,7 +28,7 @@ public class TinyGates
         if (ModList.get().isLoaded("tinyredstone"))
             RegistrationTinyRedstone.register();
 
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(ModSetup::init);
+        //FMLJavaModLoadingContext.get().getModEventBus().addListener(ModSetup::init);
 
         if(FMLEnvironment.dist.isClient()) {
             FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientSetup::init);

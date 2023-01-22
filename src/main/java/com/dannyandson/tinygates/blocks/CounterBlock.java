@@ -12,7 +12,7 @@ public class CounterBlock extends AbstractGateBlock {
 
     @Override
     public boolean canConnectRedstone(Side side) {
-        return side!=Side.TOP && side!=Side.BACK;
+        return side!=Side.TOP && side!=Side.BOTTOM;
     }
 
 }

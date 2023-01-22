@@ -1,6 +1,5 @@
 package com.dannyandson.tinygates.items;
 
-import com.dannyandson.tinygates.setup.ModSetup;
 import com.dannyandson.tinyredstone.api.AbstractPanelCellItem;
 import com.dannyandson.tinyredstone.blocks.PanelBlock;
 import net.minecraft.ChatFormatting;
@@ -19,7 +18,7 @@ import java.util.List;
 public class PanelCellGateItem extends AbstractPanelCellItem {
 
     public PanelCellGateItem() {
-        super(new Item.Properties().tab(ModSetup.ITEM_GROUP));
+        super(new Item.Properties());
     }
 
     @Override
