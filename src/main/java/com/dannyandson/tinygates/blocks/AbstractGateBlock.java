@@ -3,12 +3,16 @@ package com.dannyandson.tinygates.blocks;
 import com.dannyandson.tinygates.setup.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -95,6 +99,21 @@ public abstract class AbstractGateBlock extends BaseEntityBlock {
                 gateEntity.outputChange();
         } else
             super.onPlace(p_60566_, level, pos, p_60569_, p_60570_);
+    }
+
+    @Override
+    protected void spawnDestroyParticles(Level p_152422_, Player p_152423_, BlockPos p_152424_, BlockState p_152425_) {
+        super.spawnDestroyParticles(p_152422_, p_152423_, p_152424_, Blocks.IRON_BLOCK.defaultBlockState());
+    }
+
+    @Override
+    public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+        ItemStack itemStack = new ItemStack(this);
+        ItemEntity itementity = new ItemEntity(level, (double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D, itemStack);
+        itementity.setDefaultPickUpDelay();
+        level.addFreshEntity(itementity);
+
+        super.playerWillDestroy(level, pos, state, player);
     }
 
     @SuppressWarnings("deprecation")
