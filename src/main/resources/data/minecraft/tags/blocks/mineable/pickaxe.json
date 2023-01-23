@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "tinygates:and_gate_block",
+    "tinygates:clock_block",
+    "tinygates:counter_block",
+    "tinygates:edge_detector_block",
+    "tinygates:not_gate_block",
+    "tinygates:or_gate_block",
+    "tinygates:rs_latch_block",
+    "tinygates:t_flip_flop_block",
+    "tinygates:xor_gate_block"
+  ]
+}
