@@ -108,11 +108,12 @@ public abstract class AbstractGateBlock extends BaseEntityBlock {
 
     @Override
     public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-        ItemStack itemStack = new ItemStack(this);
-        ItemEntity itementity = new ItemEntity(level, (double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D, itemStack);
-        itementity.setDefaultPickUpDelay();
-        level.addFreshEntity(itementity);
-
+        if(!player.isCreative()) {
+            ItemStack itemStack = new ItemStack(this);
+            ItemEntity itementity = new ItemEntity(level, (double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D, itemStack);
+            itementity.setDefaultPickUpDelay();
+            level.addFreshEntity(itementity);
+        }
         super.playerWillDestroy(level, pos, state, player);
     }
 
