@@ -50,7 +50,7 @@ public class Clock extends AbstractGate {
                 this.output = true;
                 this.tick = 0;
                 return true;
-            } else if (this.output) {
+            } else if (this.output && this.tick>1) {
                 this.output = false;
                 return true;
             }else {
