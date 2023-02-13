@@ -45,11 +45,11 @@ public class EdgeDetector extends AbstractGate {
     @Override
     public boolean tick(PanelCellPos cellPos) {
         if (this.output){
-            this.ticks--;
             if (ticks<=0) {
                 this.output = false;
                 return true;
             }
+            this.ticks--;
         }
         return false;
     }

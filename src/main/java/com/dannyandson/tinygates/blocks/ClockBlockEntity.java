@@ -48,7 +48,7 @@ public class ClockBlockEntity extends AbstractGateBlockEntity {
                 this.output = 15;
                 this.tick = 0;
                 return true;
-            } else if (this.output>0) {
+            } else if (this.output>0 && this.tick>1) {
                 this.output = 0;
                 return true;
             }else {

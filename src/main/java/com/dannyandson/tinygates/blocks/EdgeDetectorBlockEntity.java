@@ -51,11 +51,11 @@ public class EdgeDetectorBlockEntity extends AbstractGateBlockEntity {
 
     public boolean tick(){
         if (this.output>0){
-            this.ticks--;
             if (ticks<=0) {
                 this.output = 0;
                 return true;
             }
+            this.ticks--;
         }
         return false;
     }
