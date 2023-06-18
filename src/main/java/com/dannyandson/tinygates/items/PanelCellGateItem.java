@@ -23,7 +23,7 @@ public class PanelCellGateItem extends AbstractPanelCellItem {
 
     @Override
     public boolean onBlockStartBreak(ItemStack itemstack, BlockPos pos, Player player) {
-        return player.level.getBlockState(pos).getBlock() instanceof PanelBlock;
+        return player.level().getBlockState(pos).getBlock() instanceof PanelBlock;
     }
 
     @Override

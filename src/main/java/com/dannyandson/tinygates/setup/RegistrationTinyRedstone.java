@@ -43,7 +43,7 @@ public class RegistrationTinyRedstone {
         INSTANCE.messageBuilder(PanelCellSync.class,id)
                 .encoder(PanelCellSync::toBytes)
                 .decoder(PanelCellSync::new)
-                .consumer(PanelCellSync::handle)
+                .consumerNetworkThread(PanelCellSync::handle)
                 .add();
     }
 

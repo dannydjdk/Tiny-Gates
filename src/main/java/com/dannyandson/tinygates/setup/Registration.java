@@ -3,7 +3,11 @@ package com.dannyandson.tinygates.setup;
 import com.dannyandson.tinygates.TinyGates;
 import com.dannyandson.tinygates.blocks.*;
 import com.dannyandson.tinygates.items.GateBlockItem;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
@@ -16,6 +20,7 @@ public class Registration {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, TinyGates.MODID);
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, TinyGates.MODID);
     private static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, TinyGates.MODID);
+    private static final DeferredRegister<CreativeModeTab> TAB = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, TinyGates.MODID);
 
 
     public static final RegistryObject<ANDGateBlock> AND_GATE_BLOCK = BLOCKS.register("and_gate_block", ANDGateBlock::new);
@@ -66,12 +71,21 @@ public class Registration {
 
     public static final DirectionProperty GATE_DIRECTION = DirectionProperty.create("gate_direction");
 
+     public static RegistryObject<CreativeModeTab> CREATIVE_TAB = TAB.register("tinygatestab", () ->
+            CreativeModeTab.builder()
+                    .title(Component.translatable("tinygates"))
+                    .icon(() -> new ItemStack(Registration.AND_GATE_ITEM.get()))
+                    .displayItems((parameters,output) ->ITEMS.getEntries().forEach(o -> output.accept(o.get())))
+                    .build());
+   
+    
 
     //called from main mod constructor
     public static void register() {
         ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
         BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         BLOCK_ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
+        TAB.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
 

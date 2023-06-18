@@ -26,7 +26,7 @@ public class ModNetworkHandler {
         INSTANCE.messageBuilder(ClockTickSync.class,nextID())
                 .encoder(ClockTickSync::toBytes)
                 .decoder(ClockTickSync::new)
-                .consumer(ClockTickSync::handle)
+                .consumerNetworkThread(ClockTickSync::handle)
                 .add();
 
         if (ModList.get().isLoaded("tinyredstone"))
