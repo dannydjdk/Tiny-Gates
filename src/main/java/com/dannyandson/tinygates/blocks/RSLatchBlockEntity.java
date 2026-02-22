@@ -21,12 +21,6 @@ public class RSLatchBlockEntity extends AbstractGateBlockEntity{
         return RenderHelper.TEXTURE_RS_OFF;
     }
 
-    /**
-     * Respond to neighbor change
-     *
-     * @param neighbor The block position of the neighbor that changed
-     * @return true if the output changed
-     */
     @Override
     public boolean onNeighborChange(@Nullable BlockPos neighbor) {
         Direction leftDirection = getDirectionFromSide(Side.LEFT);

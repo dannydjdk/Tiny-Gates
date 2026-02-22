@@ -1,9 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " T ",
+    "TTT",
     "TST",
-    " T "
+    "TTT"
   ],
   "key": {
     "T": {
@@ -11,11 +11,11 @@
     },
     "S":
     {
-      "tag": "forge:silicon"
+      "tag": "c:silicon"
     }
   },
   "result": {
-    "item": "tinygates:tiny_not_gate",
+    "id": "tinygates:tiny_and_gate",
     "count": 4
   }
 }

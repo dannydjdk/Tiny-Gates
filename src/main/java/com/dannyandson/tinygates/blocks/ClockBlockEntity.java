@@ -4,6 +4,7 @@ import com.dannyandson.tinygates.gui.ClockBlockGUI;
 import com.dannyandson.tinygates.setup.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
@@ -26,19 +27,12 @@ public class ClockBlockEntity extends AbstractGateBlockEntity {
         return (this.output > 0 ? TEXTURES_CLOCK[TEXTURES_CLOCK.length - 1] : TEXTURES_CLOCK[Math.min(Math.floorDiv(tick * (TEXTURES_CLOCK.length - 1), ticks), TEXTURES_CLOCK.length - 1)]);
     }
 
-    /**
-     * Respond to neighbor change
-     *
-     * @param neighbor The block position of the neighbor that changed
-     * @return true if the output changed
-     */
     @Override
     public boolean onNeighborChange(@Nullable BlockPos neighbor) {
         Direction backDirection = getDirectionFromSide(Side.BACK);
         int backSignal = getLevel().getSignal(getBlockPos().relative(backDirection), backDirection);
         this.input = backSignal>0;
         return false;
-
     }
 
     public boolean tick(){
@@ -62,7 +56,6 @@ public class ClockBlockEntity extends AbstractGateBlockEntity {
     {
         if (getLevel().isClientSide)
             ClockBlockGUI.open(this);
-
     }
 
     public Integer getTicks() {
@@ -78,20 +71,18 @@ public class ClockBlockEntity extends AbstractGateBlockEntity {
     }
 
     @Override
-    public void load(CompoundTag nbt) {
-        super.load(nbt);
+    protected void loadAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
+        super.loadAdditional(nbt, registries);
         ticks=nbt.getInt("ticks");
         tick=nbt.getInt("tick");
         input=nbt.getBoolean("input");
     }
 
     @Override
-    protected void saveAdditional(CompoundTag nbt) {
-        super.saveAdditional(nbt);
+    protected void saveAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
+        super.saveAdditional(nbt, registries);
         nbt.putInt("ticks",ticks);
         nbt.putInt("tick",tick);
         nbt.putBoolean("input",input);
     }
-
-
 }

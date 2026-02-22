@@ -7,18 +7,18 @@
   ],
   "key": {
     "T": {
-      "item": "tinyredstone:tiny_piston"
+      "item": "minecraft:piston"
     },
     "R": {
-      "item": "tinyredstone:tiny_redstone"
+      "item": "minecraft:redstone"
     },
     "S":
     {
-      "tag": "forge:silicon"
+      "tag": "c:stones"
     }
   },
   "result": {
-    "item": "tinygates:tiny_edge_detector",
+    "id": "tinygates:edge_detector_item",
     "count": 4
   }
 }

@@ -7,18 +7,18 @@
   ],
   "key": {
     "T": {
-      "item": "minecraft:repeater"
+      "item": "tinyredstone:tiny_repeater"
     },
     "R": {
-      "item": "minecraft:comparator"
+      "item": "tinyredstone:tiny_comparator"
     },
     "S":
     {
-      "tag": "forge:stone"
+      "tag": "c:silicon"
     }
   },
   "result": {
-    "item": "tinygates:t_flip_flop_item",
+    "id": "tinygates:tiny_t_flip_flop",
     "count": 4
   }
 }

@@ -1,21 +1,21 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "TTT",
+    " T ",
     "TST",
-    "TTT"
+    " T "
   ],
   "key": {
     "T": {
-      "item": "tinyredstone:tiny_redstone_torch"
+      "item": "tinyredstone:tiny_repeater"
     },
     "S":
     {
-      "tag": "forge:silicon"
+      "tag": "c:silicon"
     }
   },
   "result": {
-    "item": "tinygates:tiny_and_gate",
+    "id": "tinygates:tiny_clock",
     "count": 4
   }
 }

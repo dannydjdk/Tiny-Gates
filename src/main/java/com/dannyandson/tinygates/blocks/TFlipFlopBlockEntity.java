@@ -4,6 +4,7 @@ import com.dannyandson.tinygates.RenderHelper;
 import com.dannyandson.tinygates.setup.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
@@ -22,12 +23,6 @@ public class TFlipFlopBlockEntity extends AbstractGateBlockEntity{
         return input?(output>0? RenderHelper.TEXTURE_T_ON_ON : RenderHelper.TEXTURE_T_ON_OFF):(output>0? RenderHelper.TEXTURE_T_OFF_ON : RenderHelper.TEXTURE_T_OFF_OFF);
     }
 
-    /**
-     * Respond to neighbor change
-     *
-     * @param neighbor The block position of the neighbor that changed
-     * @return true if the output changed
-     */
     @Override
     public boolean onNeighborChange(@Nullable BlockPos neighbor) {
         Direction backDirection = getDirectionFromSide(Side.BACK);
@@ -46,15 +41,14 @@ public class TFlipFlopBlockEntity extends AbstractGateBlockEntity{
     }
 
     @Override
-    public void load(CompoundTag nbt) {
-        super.load(nbt);
+    protected void loadAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
+        super.loadAdditional(nbt, registries);
         this.input = nbt.getBoolean("input");
     }
 
     @Override
-    protected void saveAdditional(CompoundTag nbt) {
-        super.saveAdditional(nbt);
+    protected void saveAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
+        super.saveAdditional(nbt, registries);
         nbt.putBoolean("input", this.input);
     }
-
 }

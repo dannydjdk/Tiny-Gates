@@ -7,18 +7,18 @@
   ],
   "key": {
     "T": {
-      "item": "tinyredstone:tiny_comparator"
+      "item": "minecraft:comparator"
     },
     "R": {
-      "item": "tinyredstone:tiny_redstone"
+      "item": "minecraft:redstone"
     },
     "S":
     {
-      "tag": "forge:silicon"
+      "tag": "c:stones"
     }
   },
   "result": {
-    "item": "tinygates:tiny_counter",
+    "id": "tinygates:counter_item",
     "count": 4
   }
 }

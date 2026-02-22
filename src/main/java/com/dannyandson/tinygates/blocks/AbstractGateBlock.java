@@ -1,6 +1,7 @@
 package com.dannyandson.tinygates.blocks;
 
 import com.dannyandson.tinygates.setup.Registration;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -38,6 +39,14 @@ public abstract class AbstractGateBlock extends BaseEntityBlock {
                         .sound(SoundType.STONE)
                         .strength(0.2f)
         );
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        // Each concrete subclass should ideally provide its own codec.
+        // This default implementation prevents the crash. Subclasses that need
+        // serialization should override this.
+        throw new UnsupportedOperationException("codec() must be overridden in subclass: " + getClass().getName());
     }
 
     @Nullable
@@ -88,7 +97,7 @@ public abstract class AbstractGateBlock extends BaseEntityBlock {
             if(gateEntity.onNeighborChange(neighbor))
                 gateEntity.outputChange();
         } else
-            super.onNeighborChange(state, level, pos, neighbor);
+            super.neighborChanged(state, level, pos, block, neighbor, p_60514_);
     }
 
     @Override
@@ -106,14 +115,14 @@ public abstract class AbstractGateBlock extends BaseEntityBlock {
     }
 
     @Override
-    public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+    public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
         if(!player.isCreative()) {
             ItemStack itemStack = new ItemStack(this);
             ItemEntity itementity = new ItemEntity(level, (double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D, itemStack);
             itementity.setDefaultPickUpDelay();
             level.addFreshEntity(itementity);
         }
-        super.playerWillDestroy(level, pos, state, player);
+        return super.playerWillDestroy(level, pos, state, player);
     }
 
     @SuppressWarnings("deprecation")

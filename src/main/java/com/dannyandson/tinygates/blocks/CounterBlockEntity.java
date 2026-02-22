@@ -3,6 +3,7 @@ package com.dannyandson.tinygates.blocks;
 import com.dannyandson.tinygates.setup.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
@@ -23,12 +24,6 @@ public class CounterBlockEntity extends AbstractGateBlockEntity {
         return TEXTURES_COUNTER[output];
     }
 
-    /**
-     * Respond to neighbor change
-     *
-     * @param neighbor The block position of the neighbor that changed
-     * @return true if the output changed
-     */
     @Override
     public boolean onNeighborChange(@Nullable BlockPos neighbor) {
         Direction backDirection = getDirectionFromSide(Side.BACK);
@@ -38,17 +33,14 @@ public class CounterBlockEntity extends AbstractGateBlockEntity {
         int rightSignal = getLevel().getSignal(getBlockPos().relative(rightDirection), rightDirection);
         int leftSignal = getLevel().getSignal(getBlockPos().relative(leftDirection), leftDirection);
 
-
         int output= this.output;
         boolean previousinput = this.input;
         this.input = backSignal>0;
 
         if (leftSignal>0) {
-            //left input locks counter
             return false;
         }
         else if (rightSignal>0){
-            //right input resets counter
             output = 0;
         }
         else if (!previousinput && this.input && output<15){
@@ -60,20 +52,17 @@ public class CounterBlockEntity extends AbstractGateBlockEntity {
             return true;
         }
         return false;
-
     }
 
     @Override
-    public void load(CompoundTag nbt) {
-        super.load(nbt);
+    protected void loadAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
+        super.loadAdditional(nbt, registries);
         input=nbt.getBoolean("input");
     }
 
     @Override
-    protected void saveAdditional(CompoundTag nbt) {
-        super.saveAdditional(nbt);
+    protected void saveAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
+        super.saveAdditional(nbt, registries);
         nbt.putBoolean("input",input);
     }
-
-
 }

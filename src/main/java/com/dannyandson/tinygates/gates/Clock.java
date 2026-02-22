@@ -2,7 +2,6 @@ package com.dannyandson.tinygates.gates;
 
 import com.dannyandson.tinygates.RenderHelper;
 import com.dannyandson.tinygates.gui.TinyClockGUI;
-import com.dannyandson.tinygates.network.ModNetworkHandler;
 import com.dannyandson.tinyredstone.api.IOverlayBlockInfo;
 import com.dannyandson.tinyredstone.api.IPanelCell;
 import com.dannyandson.tinyredstone.blocks.*;
@@ -17,7 +16,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.network.NetworkDirection;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class Clock extends AbstractGate {
 
@@ -113,8 +112,8 @@ public class Clock extends AbstractGate {
         PanelTile panelTile = cellPos.getPanelTile();
         BlockPos pos = panelTile.getBlockPos();
         for (Player player : panelTile.getLevel().players()) {
-            if (player instanceof ServerPlayer && player.distanceToSqr(pos.getX(),pos.getY(),pos.getZ()) < 64d) {
-                ModNetworkHandler.getINSTANCE().sendTo(new PanelCellSync(pos,cellPos.getIndex(),writeNBT()), ((ServerPlayer) player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+            if (player instanceof ServerPlayer serverPlayer && player.distanceToSqr(pos.getX(),pos.getY(),pos.getZ()) < 64d) {
+                PacketDistributor.sendToPlayer(serverPlayer, new PanelCellSync(pos, cellPos.getIndex(), writeNBT()));
             }
         }
     }

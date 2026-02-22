@@ -1,45 +1,34 @@
 package com.dannyandson.tinygates.network;
 
 import com.dannyandson.tinygates.TinyGates;
-import com.dannyandson.tinygates.setup.RegistrationTinyRedstone;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
+@EventBusSubscriber(modid = TinyGates.MODID, bus = EventBusSubscriber.Bus.MOD)
 public class ModNetworkHandler {
-    private static SimpleChannel INSTANCE;
-    private static int ID = 0;
-    private static final String PROTOCOL_VERSION = "1.2";
 
-    private static int nextID() {
-        return ID++;
-    }
+    @SubscribeEvent
+    public static void registerMessages(RegisterPayloadHandlersEvent event) {
+        final PayloadRegistrar registrar = event.registrar(TinyGates.MODID).versioned("1.2");
 
-    public static void registerMessages() {
-        INSTANCE = NetworkRegistry.newSimpleChannel(
-                new ResourceLocation(TinyGates.MODID, "tinyredstone"),
-                () -> PROTOCOL_VERSION,
-                PROTOCOL_VERSION::equals,
-                PROTOCOL_VERSION::equals);
+        registrar.playToServer(
+                ClockTickSync.TYPE,
+                ClockTickSync.STREAM_CODEC,
+                ClockTickSync::handle
+        );
 
-        INSTANCE.messageBuilder(ClockTickSync.class,nextID())
-                .encoder(ClockTickSync::toBytes)
-                .decoder(ClockTickSync::new)
-                .consumerNetworkThread(ClockTickSync::handle)
-                .add();
-
-        if (ModList.get().isLoaded("tinyredstone"))
-            RegistrationTinyRedstone.registerTinyRedstoneNetworkHandlers(INSTANCE,nextID());
-
-    }
-
-    public static SimpleChannel getINSTANCE(){
-        return INSTANCE;
+        // NOTE: If Tiny Redstone is loaded, its PanelCellSync packet registration
+        // needs to be handled by the Tiny Redstone mod itself in NeoForge 1.21.1.
+        // The old pattern of registering another mod's packets via SimpleChannel
+        // is no longer applicable with the new payload system.
     }
 
     public static void sendToServer(Object packet) {
-        INSTANCE.sendToServer(packet);
+        if (packet instanceof ClockTickSync clockTickSync) {
+            PacketDistributor.sendToServer(clockTickSync);
+        }
     }
-
 }

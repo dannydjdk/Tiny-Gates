@@ -28,7 +28,6 @@ public class TinyClockGUI extends ClockGUI {
     protected void setTicks(int ticks) {
         clockCell.setTicks(ticks);
         ModNetworkHandler.sendToServer(new ClockTickSync(panelTile.getBlockPos(), cellIndex, clockCell.getTicks()));
-
     }
 
     public static void open(PanelTile panelTile, Integer cellIndex, Clock clockCell) {

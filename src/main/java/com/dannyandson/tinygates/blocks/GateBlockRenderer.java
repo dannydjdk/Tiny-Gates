@@ -19,7 +19,7 @@ import static net.minecraft.core.Direction.*;
 
 public class GateBlockRenderer implements BlockEntityRenderer<AbstractGateBlockEntity> {
 
-    public static ResourceLocation TEXTURE_BLANK_PANEL = new ResourceLocation(TinyGates.MODID,"block/panel_blank");
+    public static ResourceLocation TEXTURE_BLANK_PANEL = ResourceLocation.fromNamespaceAndPath(TinyGates.MODID,"block/panel_blank");
 
     public GateBlockRenderer(BlockEntityRendererProvider.Context context){
     }
@@ -98,8 +98,6 @@ public class GateBlockRenderer implements BlockEntityRenderer<AbstractGateBlockE
 
         poseStack.popPose();
 
-
         poseStack.popPose();
-
     }
 }

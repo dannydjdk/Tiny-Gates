@@ -19,12 +19,6 @@ public class NOTGateBlockEntity extends AbstractGateBlockEntity{
         return output>0 ? RenderHelper.TEXTURE_NOT_GATE_ON : RenderHelper.TEXTURE_NOT_GATE_OFF;
     }
 
-    /**
-     * Respond to neighbor change
-     *
-     * @param neighbor The block position of the neighbor that changed
-     * @return true if the output changed
-     */
     @Override
     public boolean onNeighborChange(@Nullable BlockPos neighbor) {
         Direction backDirection = getDirectionFromSide(Side.BACK);

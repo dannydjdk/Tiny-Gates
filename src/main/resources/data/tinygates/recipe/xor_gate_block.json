@@ -10,15 +10,15 @@
       "item": "minecraft:redstone_torch"
     },
     "R": {
-      "item": "minecraft:lever"
+      "item": "minecraft:redstone"
     },
     "S":
     {
-      "tag": "forge:stone"
+      "tag": "c:stones"
     }
   },
   "result": {
-    "item": "tinygates:rs_latch_item",
+    "id": "tinygates:xor_gate_item",
     "count": 4
   }
 }

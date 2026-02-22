@@ -8,8 +8,8 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 public class ModWidget extends AbstractWidget {
 
@@ -44,24 +44,20 @@ public class ModWidget extends AbstractWidget {
     public ModWidget(int x, int y, int width, int height, Component title, int textColor)
     {
         this(x,y,width,height,title,textColor,-1);
-
     }
     public ModWidget(int x, int y, int width, int height, Component title)
     {
         this(x,y,width,height,title,0xFFFFFFFF,-1);
-
     }
     public ModWidget(int x, int y, int width, int height, int bgColor)
     {
         this(x,y,width,height,Component.nullToEmpty(""),0xFFFFFFFF,bgColor);
-
     }
     public ModWidget(int x, int y, int width, int height, int bgColor, IPressable pressedAction)
     {
         this(x,y,width,height,Component.nullToEmpty(""),0xFFFFFFFF,bgColor);
         this.pressedAction=pressedAction;
     }
-
 
     public ModWidget setTextHAlignment(HAlignment alignment) {
         this.halignment = alignment;
@@ -92,7 +88,6 @@ public class ModWidget extends AbstractWidget {
 
     @Override
     protected void updateWidgetNarration(NarrationElementOutput p_259858_) {
-
     }
 
     @Override
@@ -100,7 +95,6 @@ public class ModWidget extends AbstractWidget {
         if (visible) {
             int drawX,drawY;
             Font fr = Minecraft.getInstance().font;
-
 
             switch (halignment) {
                 case LEFT:
@@ -127,7 +121,6 @@ public class ModWidget extends AbstractWidget {
                     break;
             }
 
-
             PoseStack matrixStack = guiGraphics.pose();
             if (scale != 1.0f) {
                 matrixStack.pushPose();
@@ -148,7 +141,6 @@ public class ModWidget extends AbstractWidget {
                 this.renderHoverToolTip(guiGraphics,mouseX,mouseY);
         }
     }
-
 
     public void renderHoverToolTip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         if (this.toolTipTextComponent != null) {
@@ -173,5 +165,4 @@ public class ModWidget extends AbstractWidget {
     public interface IPressable {
         void onPress(ModWidget modWidget);
     }
-
 }

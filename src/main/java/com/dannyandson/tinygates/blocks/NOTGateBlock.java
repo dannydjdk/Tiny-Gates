@@ -1,9 +1,18 @@
 package com.dannyandson.tinygates.blocks;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class NOTGateBlock extends AbstractGateBlock {
+
+    public static final MapCodec<NOTGateBlock> CODEC = simpleCodec(p -> new NOTGateBlock());
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
+    }
 
     @Override
     protected AbstractGateBlockEntity newAbstractGateBlockEntity(BlockPos pos, BlockState state) {

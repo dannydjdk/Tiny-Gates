@@ -1,7 +1,6 @@
 package com.dannyandson.tinygates.gui;
 
 import com.dannyandson.tinygates.TinyGates;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -14,7 +13,7 @@ public abstract class ClockGUI extends Screen {
 
     private ModWidget tickCount;
 
-    private final ResourceLocation GUI = new ResourceLocation(TinyGates.MODID, "textures/gui/transparent.png");
+    private final ResourceLocation GUI = ResourceLocation.fromNamespaceAndPath(TinyGates.MODID, "textures/gui/transparent.png");
 
     protected ClockGUI(Component component) {
         super(component);
@@ -28,7 +27,6 @@ public abstract class ClockGUI extends Screen {
         int relX = (this.width - WIDTH) / 2;
         int relY = (this.height - HEIGHT) / 2;
         Integer redstoneTicks = this.getTicks()/2;
-
 
         this.tickCount = new ModWidget(relX,relY+21,WIDTH,20, Component.nullToEmpty(redstoneTicks.toString()))
                 .setTextHAlignment(ModWidget.HAlignment.CENTER).setTextVAlignment(ModWidget.VAlignment.MIDDLE);
@@ -71,16 +69,16 @@ public abstract class ClockGUI extends Screen {
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        RenderSystem.setShaderTexture(0, GUI);
-        RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
-        this.minecraft.getTextureManager().bindForSetup(GUI);
+    public void renderBackground(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        // Override to avoid the 1.21 blur effect - darken only
+        guiGraphics.fill(0, 0, this.width, this.height, 0xC0101010);
         int relX = (this.width - WIDTH) / 2;
         int relY = (this.height - HEIGHT) / 2;
         guiGraphics.blit(GUI, relX, relY, 0, 0, WIDTH, HEIGHT);
-
-        super.render(guiGraphics,mouseX, mouseY, partialTicks);
     }
 
-
+    @Override
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        super.render(guiGraphics, mouseX, mouseY, partialTicks);
+    }
 }

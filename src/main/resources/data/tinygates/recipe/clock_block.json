@@ -1,21 +1,21 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "TTT",
+    " T ",
     "TST",
-    "TTT"
+    " T "
   ],
   "key": {
     "T": {
-      "item": "minecraft:redstone"
+      "item": "minecraft:repeater"
     },
     "S":
     {
-      "tag": "forge:stone"
+      "tag": "c:stones"
     }
   },
   "result": {
-    "item": "tinygates:or_gate_item",
+    "id": "tinygates:clock_item",
     "count": 4
   }
 }

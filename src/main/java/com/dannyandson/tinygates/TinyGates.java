@@ -2,51 +2,36 @@ package com.dannyandson.tinygates;
 
 import com.dannyandson.tinygates.setup.ClientSetup;
 import com.dannyandson.tinygates.setup.Registration;
-import com.dannyandson.tinygates.network.ModNetworkHandler;
-import com.dannyandson.tinygates.setup.ModSetup;
 import com.dannyandson.tinygates.setup.RegistrationTinyRedstone;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModList;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.common.NeoForge;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-// The value here should match an entry in the META-INF/mods.toml file
 @Mod(TinyGates.MODID)
-public class TinyGates
-{
-    // Directly reference a log4j logger.
+public class TinyGates {
     private static final Logger LOGGER = LogManager.getLogger();
     public static final String MODID = "tinygates";
 
-    public TinyGates() {
+    public TinyGates(IEventBus modEventBus) {
 
-        Registration.register();
+        Registration.register(modEventBus);
         if (ModList.get().isLoaded("tinyredstone"))
             RegistrationTinyRedstone.register();
 
-        //FMLJavaModLoadingContext.get().getModEventBus().addListener(ModSetup::init);
-
-        if(FMLEnvironment.dist.isClient()) {
-            FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientSetup::init);
+        if (FMLEnvironment.dist.isClient()) {
+            modEventBus.addListener(ClientSetup::init);
         }
 
-        // Register the setup method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-
-        // Register ourselves for server and other game events we are interested in
-        MinecraftForge.EVENT_BUS.register(this);
+        modEventBus.addListener(this::setup);
     }
 
-    private void setup(final FMLCommonSetupEvent event)
-    {
-        // register everything
+    private void setup(final FMLCommonSetupEvent event) {
         if (ModList.get().isLoaded("tinyredstone"))
             RegistrationTinyRedstone.registerPanelCells();
-        ModNetworkHandler.registerMessages();
     }
-
 }

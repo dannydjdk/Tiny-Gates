@@ -7,18 +7,18 @@
   ],
   "key": {
     "T": {
-      "item": "minecraft:redstone_torch"
+      "item": "tinyredstone:tiny_redstone_torch"
     },
     "R": {
-      "item": "minecraft:redstone"
+      "item": "tinyredstone:tiny_redstone"
     },
     "S":
     {
-      "tag": "forge:stone"
+      "tag": "c:silicon"
     }
   },
   "result": {
-    "item": "tinygates:xor_gate_item",
+    "id": "tinygates:tiny_xor_gate",
     "count": 4
   }
 }

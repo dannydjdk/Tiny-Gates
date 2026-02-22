@@ -1,10 +1,11 @@
 package com.dannyandson.tinygates.blocks;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -13,6 +14,13 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
 public class EdgeDetectorBlock extends AbstractGateBlock {
+
+    public static final MapCodec<EdgeDetectorBlock> CODEC = simpleCodec(p -> new EdgeDetectorBlock());
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
+    }
 
     @Override
     protected AbstractGateBlockEntity newAbstractGateBlockEntity(BlockPos pos, BlockState state) {
@@ -34,14 +42,13 @@ public class EdgeDetectorBlock extends AbstractGateBlock {
         };
     }
 
-    @SuppressWarnings("deprecation")
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult blockHitResult) {
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult blockHitResult) {
         if (level.getBlockEntity(pos) instanceof EdgeDetectorBlockEntity edgeDetectorBlockEntity) {
             edgeDetectorBlockEntity.use();
             return InteractionResult.SUCCESS;
         }
 
-        return super.use(state, level, pos, player, hand, blockHitResult);
+        return super.useWithoutItem(state, level, pos, player, blockHitResult);
     }
 }

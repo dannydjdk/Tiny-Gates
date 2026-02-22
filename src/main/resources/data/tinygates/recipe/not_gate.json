@@ -1,24 +1,21 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "TRT",
-    "RSR",
-    "TRT"
+    " T ",
+    "TST",
+    " T "
   ],
   "key": {
     "T": {
       "item": "tinyredstone:tiny_redstone_torch"
     },
-    "R": {
-      "item": "tinyredstone:tiny_lever"
-    },
     "S":
     {
-      "tag": "forge:silicon"
+      "tag": "c:silicon"
     }
   },
   "result": {
-    "item": "tinygates:tiny_rs_latch",
+    "id": "tinygates:tiny_not_gate",
     "count": 4
   }
 }

@@ -10,9 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class PanelCellGateItem extends AbstractPanelCellItem {
@@ -21,17 +19,18 @@ public class PanelCellGateItem extends AbstractPanelCellItem {
         super(new Item.Properties());
     }
 
-    @Override
+    // onBlockStartBreak is a NeoForge IItemExtension hook - remove @Override
     public boolean onBlockStartBreak(ItemStack itemstack, BlockPos pos, Player player) {
         return player.level().getBlockState(pos).getBlock() instanceof PanelBlock;
     }
 
     @Override
-    public  void  appendHoverText(ItemStack stack, @Nullable Level world, List<Component> list, TooltipFlag flags)
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> list, TooltipFlag flags)
     {
         if (Screen.hasShiftDown()) {
             list.add(Component.translatable("message.item.redstone_panel_cell").withStyle(ChatFormatting.GRAY));
             list.add(Component.translatable("message." + this.getDescriptionId()).withStyle(ChatFormatting.DARK_AQUA));
         } else
-            list.add(Component.translatable("tinyredstone.tooltip.press_shift").withStyle(ChatFormatting.DARK_GRAY));    }
+            list.add(Component.translatable("tinyredstone.tooltip.press_shift").withStyle(ChatFormatting.DARK_GRAY));
+    }
 }

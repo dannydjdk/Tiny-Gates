@@ -21,12 +21,6 @@ public class ORGateBlockEntity extends AbstractGateBlockEntity{
         return RenderHelper.TEXTURE_OR_GATE_OFF;
     }
 
-    /**
-     * Respond to neighbor change
-     *
-     * @param neighbor The block position of the neighbor that changed
-     * @return true if the output changed
-     */
     @Override
     public boolean onNeighborChange(@Nullable BlockPos neighbor) {
         Direction leftDirection = getDirectionFromSide(Side.LEFT);

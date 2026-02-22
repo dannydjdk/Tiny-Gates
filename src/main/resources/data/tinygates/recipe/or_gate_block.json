@@ -1,24 +1,21 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "RTR",
+    "TTT",
     "TST",
-    "RTR"
+    "TTT"
   ],
   "key": {
     "T": {
-      "item": "minecraft:comparator"
-    },
-    "R": {
       "item": "minecraft:redstone"
     },
     "S":
     {
-      "tag": "forge:stone"
+      "tag": "c:stones"
     }
   },
   "result": {
-    "item": "tinygates:counter_item",
+    "id": "tinygates:or_gate_item",
     "count": 4
   }
 }
