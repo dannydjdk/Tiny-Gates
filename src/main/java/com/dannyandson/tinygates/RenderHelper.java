@@ -4,61 +4,62 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.client.resources.model.sprite.SpriteId;
+import net.minecraft.resources.Identifier;
 import org.joml.Matrix4f;
 
 public class RenderHelper {
 
-    public static ResourceLocation TEXTURE_AND_GATE_ON = ResourceLocation.fromNamespaceAndPath(TinyGates.MODID,"block/and_gate_on");
-    public static ResourceLocation TEXTURE_AND_GATE_OFF = ResourceLocation.fromNamespaceAndPath(TinyGates.MODID,"block/and_gate_off");
-    public static ResourceLocation[] TEXTURES_CLOCK = {
-            ResourceLocation.fromNamespaceAndPath(TinyGates.MODID, "block/clock_1"),
-            ResourceLocation.fromNamespaceAndPath(TinyGates.MODID, "block/clock_2"),
-            ResourceLocation.fromNamespaceAndPath(TinyGates.MODID, "block/clock_3"),
-            ResourceLocation.fromNamespaceAndPath(TinyGates.MODID, "block/clock_4"),
-            ResourceLocation.fromNamespaceAndPath(TinyGates.MODID, "block/clock_5"),
-            ResourceLocation.fromNamespaceAndPath(TinyGates.MODID, "block/clock_6"),
-            ResourceLocation.fromNamespaceAndPath(TinyGates.MODID, "block/clock_7"),
-            ResourceLocation.fromNamespaceAndPath(TinyGates.MODID, "block/clock_8"),
-            ResourceLocation.fromNamespaceAndPath(TinyGates.MODID, "block/clock_9")
+    public static Identifier TEXTURE_AND_GATE_ON = Identifier.fromNamespaceAndPath(TinyGates.MODID,"block/and_gate_on");
+    public static Identifier TEXTURE_AND_GATE_OFF = Identifier.fromNamespaceAndPath(TinyGates.MODID,"block/and_gate_off");
+    public static Identifier[] TEXTURES_CLOCK = {
+            Identifier.fromNamespaceAndPath(TinyGates.MODID, "block/clock_1"),
+            Identifier.fromNamespaceAndPath(TinyGates.MODID, "block/clock_2"),
+            Identifier.fromNamespaceAndPath(TinyGates.MODID, "block/clock_3"),
+            Identifier.fromNamespaceAndPath(TinyGates.MODID, "block/clock_4"),
+            Identifier.fromNamespaceAndPath(TinyGates.MODID, "block/clock_5"),
+            Identifier.fromNamespaceAndPath(TinyGates.MODID, "block/clock_6"),
+            Identifier.fromNamespaceAndPath(TinyGates.MODID, "block/clock_7"),
+            Identifier.fromNamespaceAndPath(TinyGates.MODID, "block/clock_8"),
+            Identifier.fromNamespaceAndPath(TinyGates.MODID, "block/clock_9")
     };
-    public static ResourceLocation[] TEXTURES_COUNTER = {
-            ResourceLocation.fromNamespaceAndPath(TinyGates.MODID, "block/counter_0"),
-            ResourceLocation.fromNamespaceAndPath(TinyGates.MODID, "block/counter_1"),
-            ResourceLocation.fromNamespaceAndPath(TinyGates.MODID, "block/counter_2"),
-            ResourceLocation.fromNamespaceAndPath(TinyGates.MODID, "block/counter_3"),
-            ResourceLocation.fromNamespaceAndPath(TinyGates.MODID, "block/counter_4"),
-            ResourceLocation.fromNamespaceAndPath(TinyGates.MODID, "block/counter_5"),
-            ResourceLocation.fromNamespaceAndPath(TinyGates.MODID, "block/counter_6"),
-            ResourceLocation.fromNamespaceAndPath(TinyGates.MODID, "block/counter_7"),
-            ResourceLocation.fromNamespaceAndPath(TinyGates.MODID, "block/counter_8"),
-            ResourceLocation.fromNamespaceAndPath(TinyGates.MODID, "block/counter_9"),
-            ResourceLocation.fromNamespaceAndPath(TinyGates.MODID, "block/counter_10"),
-            ResourceLocation.fromNamespaceAndPath(TinyGates.MODID, "block/counter_11"),
-            ResourceLocation.fromNamespaceAndPath(TinyGates.MODID, "block/counter_12"),
-            ResourceLocation.fromNamespaceAndPath(TinyGates.MODID, "block/counter_13"),
-            ResourceLocation.fromNamespaceAndPath(TinyGates.MODID, "block/counter_14"),
-            ResourceLocation.fromNamespaceAndPath(TinyGates.MODID, "block/counter_15")
+    public static Identifier[] TEXTURES_COUNTER = {
+            Identifier.fromNamespaceAndPath(TinyGates.MODID, "block/counter_0"),
+            Identifier.fromNamespaceAndPath(TinyGates.MODID, "block/counter_1"),
+            Identifier.fromNamespaceAndPath(TinyGates.MODID, "block/counter_2"),
+            Identifier.fromNamespaceAndPath(TinyGates.MODID, "block/counter_3"),
+            Identifier.fromNamespaceAndPath(TinyGates.MODID, "block/counter_4"),
+            Identifier.fromNamespaceAndPath(TinyGates.MODID, "block/counter_5"),
+            Identifier.fromNamespaceAndPath(TinyGates.MODID, "block/counter_6"),
+            Identifier.fromNamespaceAndPath(TinyGates.MODID, "block/counter_7"),
+            Identifier.fromNamespaceAndPath(TinyGates.MODID, "block/counter_8"),
+            Identifier.fromNamespaceAndPath(TinyGates.MODID, "block/counter_9"),
+            Identifier.fromNamespaceAndPath(TinyGates.MODID, "block/counter_10"),
+            Identifier.fromNamespaceAndPath(TinyGates.MODID, "block/counter_11"),
+            Identifier.fromNamespaceAndPath(TinyGates.MODID, "block/counter_12"),
+            Identifier.fromNamespaceAndPath(TinyGates.MODID, "block/counter_13"),
+            Identifier.fromNamespaceAndPath(TinyGates.MODID, "block/counter_14"),
+            Identifier.fromNamespaceAndPath(TinyGates.MODID, "block/counter_15")
     };
-    public static ResourceLocation TEXTURE_RISING_ON = ResourceLocation.fromNamespaceAndPath(TinyGates.MODID,"block/edge_detector_rising_on");
-    public static ResourceLocation TEXTURE_RISING_OFF = ResourceLocation.fromNamespaceAndPath(TinyGates.MODID,"block/edge_detector_rising_off");
-    public static ResourceLocation TEXTURE_FALLING_ON = ResourceLocation.fromNamespaceAndPath(TinyGates.MODID,"block/edge_detector_falling_on");
-    public static ResourceLocation TEXTURE_FALLING_OFF = ResourceLocation.fromNamespaceAndPath(TinyGates.MODID,"block/edge_detector_falling_off");
+    public static Identifier TEXTURE_RISING_ON = Identifier.fromNamespaceAndPath(TinyGates.MODID,"block/edge_detector_rising_on");
+    public static Identifier TEXTURE_RISING_OFF = Identifier.fromNamespaceAndPath(TinyGates.MODID,"block/edge_detector_rising_off");
+    public static Identifier TEXTURE_FALLING_ON = Identifier.fromNamespaceAndPath(TinyGates.MODID,"block/edge_detector_falling_on");
+    public static Identifier TEXTURE_FALLING_OFF = Identifier.fromNamespaceAndPath(TinyGates.MODID,"block/edge_detector_falling_off");
 
-    public static ResourceLocation TEXTURE_NOT_GATE_ON = ResourceLocation.fromNamespaceAndPath(TinyGates.MODID,"block/not_gate_on");
-    public static ResourceLocation TEXTURE_NOT_GATE_OFF = ResourceLocation.fromNamespaceAndPath(TinyGates.MODID,"block/not_gate_off");
-    public static ResourceLocation TEXTURE_OR_GATE_ON = ResourceLocation.fromNamespaceAndPath(TinyGates.MODID,"block/or_gate_on");
-    public static ResourceLocation TEXTURE_OR_GATE_OFF = ResourceLocation.fromNamespaceAndPath(TinyGates.MODID,"block/or_gate_off");
-    public static ResourceLocation TEXTURE_RS_ON = ResourceLocation.fromNamespaceAndPath(TinyGates.MODID,"block/rs_latch_on");
-    public static ResourceLocation TEXTURE_RS_OFF = ResourceLocation.fromNamespaceAndPath(TinyGates.MODID,"block/rs_latch_off");
-    public static ResourceLocation TEXTURE_T_ON_ON = ResourceLocation.fromNamespaceAndPath(TinyGates.MODID,"block/t_flip_flop_on_on");
-    public static ResourceLocation TEXTURE_T_OFF_ON = ResourceLocation.fromNamespaceAndPath(TinyGates.MODID,"block/t_flip_flop_off_on");
-    public static ResourceLocation TEXTURE_T_OFF_OFF = ResourceLocation.fromNamespaceAndPath(TinyGates.MODID,"block/t_flip_flop_off_off");
-    public static ResourceLocation TEXTURE_T_ON_OFF = ResourceLocation.fromNamespaceAndPath(TinyGates.MODID,"block/t_flip_flop_on_off");
-    public static ResourceLocation TEXTURE_XOR_GATE_ON = ResourceLocation.fromNamespaceAndPath(TinyGates.MODID,"block/xor_gate_on");
-    public static ResourceLocation TEXTURE_XOR_GATE_OFF = ResourceLocation.fromNamespaceAndPath(TinyGates.MODID,"block/xor_gate_off");
+    public static Identifier TEXTURE_NOT_GATE_ON = Identifier.fromNamespaceAndPath(TinyGates.MODID,"block/not_gate_on");
+    public static Identifier TEXTURE_NOT_GATE_OFF = Identifier.fromNamespaceAndPath(TinyGates.MODID,"block/not_gate_off");
+    public static Identifier TEXTURE_OR_GATE_ON = Identifier.fromNamespaceAndPath(TinyGates.MODID,"block/or_gate_on");
+    public static Identifier TEXTURE_OR_GATE_OFF = Identifier.fromNamespaceAndPath(TinyGates.MODID,"block/or_gate_off");
+    public static Identifier TEXTURE_RS_ON = Identifier.fromNamespaceAndPath(TinyGates.MODID,"block/rs_latch_on");
+    public static Identifier TEXTURE_RS_OFF = Identifier.fromNamespaceAndPath(TinyGates.MODID,"block/rs_latch_off");
+    public static Identifier TEXTURE_T_ON_ON = Identifier.fromNamespaceAndPath(TinyGates.MODID,"block/t_flip_flop_on_on");
+    public static Identifier TEXTURE_T_OFF_ON = Identifier.fromNamespaceAndPath(TinyGates.MODID,"block/t_flip_flop_off_on");
+    public static Identifier TEXTURE_T_OFF_OFF = Identifier.fromNamespaceAndPath(TinyGates.MODID,"block/t_flip_flop_off_off");
+    public static Identifier TEXTURE_T_ON_OFF = Identifier.fromNamespaceAndPath(TinyGates.MODID,"block/t_flip_flop_on_off");
+    public static Identifier TEXTURE_XOR_GATE_ON = Identifier.fromNamespaceAndPath(TinyGates.MODID,"block/xor_gate_on");
+    public static Identifier TEXTURE_XOR_GATE_OFF = Identifier.fromNamespaceAndPath(TinyGates.MODID,"block/xor_gate_off");
 
     public static void drawQuarterSlab(PoseStack poseStack, VertexConsumer builder, TextureAtlasSprite sprite_top, TextureAtlasSprite sprite_side, int combinedLight, float alpha){
         poseStack.translate(0,0,0.25);
@@ -114,12 +115,13 @@ public class RenderHelper {
         renderer.addVertex(matrix4f, x, y, z)
                 .setColor(color >> 16 & 255, color >> 8 & 255, color & 255, (int) (alpha * 255f))
                 .setUv(u, v)
+                .setUv1(0, 10)
                 .setUv2(combinedLightIn & 0xFFFF, (combinedLightIn >> 16) & 0xFFFF)
-                .setNormal(1, 0, 0);
+                .setNormal(0, 1, 0);
     }
 
-    public static TextureAtlasSprite getSprite(ResourceLocation resourceLocation) {
-        return Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(resourceLocation);
+    public static TextureAtlasSprite getSprite(Identifier identifier) {
+        return Minecraft.getInstance().getAtlasManager().get(new SpriteId(TextureAtlas.LOCATION_BLOCKS, identifier));
     }
 
 }

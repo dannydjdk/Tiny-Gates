@@ -7,7 +7,11 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class NOTGateBlock extends AbstractGateBlock {
 
-    public static final MapCodec<NOTGateBlock> CODEC = simpleCodec(p -> new NOTGateBlock());
+    public static final MapCodec<NOTGateBlock> CODEC = simpleCodec(NOTGateBlock::new);
+
+    public NOTGateBlock(Properties props) {
+        super(props);
+    }
 
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {

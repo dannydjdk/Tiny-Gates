@@ -7,7 +7,11 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class CounterBlock extends AbstractGateBlock {
 
-    public static final MapCodec<CounterBlock> CODEC = simpleCodec(p -> new CounterBlock());
+    public static final MapCodec<CounterBlock> CODEC = simpleCodec(CounterBlock::new);
+
+    public CounterBlock(Properties props) {
+        super(props);
+    }
 
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {

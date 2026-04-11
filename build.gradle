@@ -2,7 +2,7 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '2.0.42-beta'
+    id 'net.neoforged.moddev' version '2.0.141'
 }
 
 version = mod_version
@@ -13,7 +13,7 @@ base {
 }
 
 java {
-    toolchain.languageVersion = JavaLanguageVersion.of(21)
+    toolchain.languageVersion = JavaLanguageVersion.of(25)
 }
 
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
@@ -50,10 +50,10 @@ repositories {
 }
 
 dependencies {
-    implementation "curse.maven:tiny-redstone-453746:7651778"
+    implementation "curse.maven:tiny-redstone-453746:7868234"
 
-    implementation "curse.maven:jei-238222:7391682"
-    implementation "curse.maven:theoneprobe-245211:7292875"
+    implementation "curse.maven:jade-324717:7817285"
+    implementation "curse.maven:jei-238222:7861613"
 }
 
 def resourceTargets = ['META-INF/neoforge.mods.toml', 'pack.mcmeta']

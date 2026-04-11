@@ -6,13 +6,8 @@
     " T "
   ],
   "key": {
-    "T": {
-      "item": "minecraft:repeater"
-    },
-    "S":
-    {
-      "tag": "c:stones"
-    }
+    "T": "minecraft:repeater",
+    "S": "#c:stones"
   },
   "result": {
     "id": "tinygates:clock_item",

@@ -1,14 +1,14 @@
 package com.dannyandson.tinygates.blocks;
 
 import com.dannyandson.tinygates.RenderHelper;
-import com.dannyandson.tinygates.setup.Registration;
+import com.dannyandson.tinygates.setup.ModRegistration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import org.jspecify.annotations.Nullable;
 
 public class EdgeDetectorBlockEntity extends AbstractGateBlockEntity {
 
@@ -17,11 +17,11 @@ public class EdgeDetectorBlockEntity extends AbstractGateBlockEntity {
     private int ticks=0;
 
     public EdgeDetectorBlockEntity(BlockPos pos, BlockState state) {
-        super(Registration.EDGE_DETECTOR_BLOCK_ENTITY.get(), pos, state);
+        super(ModRegistration.EDGE_DETECTOR_BLOCK_ENTITY.get(), pos, state);
     }
 
     @Override
-    public ResourceLocation getTexture() {
+    public Identifier getTexture() {
         return output>0?(rising? RenderHelper.TEXTURE_RISING_ON: RenderHelper.TEXTURE_FALLING_ON):(rising? RenderHelper.TEXTURE_RISING_OFF: RenderHelper.TEXTURE_FALLING_OFF);
     }
 
@@ -59,18 +59,18 @@ public class EdgeDetectorBlockEntity extends AbstractGateBlockEntity {
     }
 
     @Override
-    protected void loadAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
-        super.loadAdditional(nbt, registries);
-        input=nbt.getBoolean("input");
-        rising=nbt.getBoolean("rising");
-        ticks=nbt.getInt("ticks");
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        output.putBoolean("input", this.input);
+        output.putBoolean("rising", this.rising);
+        output.putInt("ticks", this.ticks);
     }
 
     @Override
-    protected void saveAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
-        super.saveAdditional(nbt, registries);
-        nbt.putBoolean("input",input);
-        nbt.putBoolean("rising",rising);
-        nbt.putInt("ticks",ticks);
+    public void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        this.input = input.getBooleanOr("input", false);
+        this.rising = input.getBooleanOr("rising", true);
+        this.ticks = input.getIntOr("ticks", 0);
     }
 }

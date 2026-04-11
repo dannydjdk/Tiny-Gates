@@ -11,11 +11,15 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public class ClockBlock extends AbstractGateBlock {
 
-    public static final MapCodec<ClockBlock> CODEC = simpleCodec(p -> new ClockBlock());
+    public static final MapCodec<ClockBlock> CODEC = simpleCodec(ClockBlock::new);
+
+    public ClockBlock(Properties props) {
+        super(props);
+    }
 
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {

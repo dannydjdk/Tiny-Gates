@@ -8,14 +8,14 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record ClockTickSync(BlockPos pos, int cellIndex, int ticks) implements CustomPacketPayload {
 
     public static final CustomPacketPayload.Type<ClockTickSync> TYPE =
-            new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(TinyGates.MODID, "clock_tick_sync"));
+            new CustomPacketPayload.Type<>(Identifier.fromNamespaceAndPath(TinyGates.MODID, "clock_tick_sync"));
 
     public static final StreamCodec<FriendlyByteBuf, ClockTickSync> STREAM_CODEC = StreamCodec.composite(
             BlockPos.STREAM_CODEC, ClockTickSync::pos,

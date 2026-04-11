@@ -6,7 +6,7 @@ import com.dannyandson.tinyredstone.blocks.*;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
@@ -19,7 +19,7 @@ public class EdgeDetector extends AbstractGate {
 
     @Override
     public void render(PoseStack poseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay, float alpha) {
-        VertexConsumer builder = buffer.getBuffer((alpha==1.0)? RenderType.solid():RenderType.translucent());
+        VertexConsumer builder = buffer.getBuffer((alpha==1.0)? Sheets.cutoutBlockSheet():Sheets.translucentBlockSheet());
         TextureAtlasSprite sprite = RenderHelper.getSprite(PanelTileRenderer.TEXTURE);
         TextureAtlasSprite sprite_gate = RenderHelper.getSprite(output?(rising? RenderHelper.TEXTURE_RISING_ON: RenderHelper.TEXTURE_FALLING_ON):(rising? RenderHelper.TEXTURE_RISING_OFF: RenderHelper.TEXTURE_FALLING_OFF));
 
@@ -75,14 +75,13 @@ public class EdgeDetector extends AbstractGate {
     @Override
     public void readNBT(CompoundTag compoundTag) {
         super.readNBT(compoundTag);
-        input=compoundTag.getBoolean("input");
-        rising=compoundTag.getBoolean("rising");
-        ticks=compoundTag.getInt("ticks");
+        input=compoundTag.getBooleanOr("input", false);
+        rising=compoundTag.getBooleanOr("rising", true);
+        ticks=compoundTag.getIntOr("ticks", 0);
     }
 
     @Override
     public void addInfo(IOverlayBlockInfo overlayBlockInfo, PanelTile panelTile, PosInPanelCell posInPanelCell) {
         overlayBlockInfo.addText("Detecting", (this.rising?"Rising":"Falling") + " edge");
     }
-
 }

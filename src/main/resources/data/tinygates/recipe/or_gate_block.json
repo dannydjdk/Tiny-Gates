@@ -6,13 +6,8 @@
     "TTT"
   ],
   "key": {
-    "T": {
-      "item": "minecraft:redstone"
-    },
-    "S":
-    {
-      "tag": "c:stones"
-    }
+    "T": "minecraft:redstone",
+    "S": "#c:stones"
   },
   "result": {
     "id": "tinygates:or_gate_item",

@@ -11,11 +11,15 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public class EdgeDetectorBlock extends AbstractGateBlock {
 
-    public static final MapCodec<EdgeDetectorBlock> CODEC = simpleCodec(p -> new EdgeDetectorBlock());
+    public static final MapCodec<EdgeDetectorBlock> CODEC = simpleCodec(EdgeDetectorBlock::new);
+
+    public EdgeDetectorBlock(Properties props) {
+        super(props);
+    }
 
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {

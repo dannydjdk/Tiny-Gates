@@ -1,24 +1,24 @@
 package com.dannyandson.tinygates.blocks;
 
-import com.dannyandson.tinygates.setup.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-
-import javax.annotation.Nullable;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import org.jspecify.annotations.Nullable;
 
 public abstract class AbstractGateBlockEntity extends BlockEntity {
     protected int output;
 
-    public abstract ResourceLocation getTexture();
+    public abstract Identifier getTexture();
 
     public AbstractGateBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -54,13 +54,13 @@ public abstract class AbstractGateBlockEntity extends BlockEntity {
         BlockPos neighborPos = worldPosition.relative(dir);
         BlockState neighborBlockState = level.getBlockState(neighborPos);
         if (!neighborBlockState.isAir())
-            this.level.updateNeighborsAtExceptFromFacing(neighborPos, neighborBlockState.getBlock(), dir.getOpposite());
+            this.level.updateNeighborsAtExceptFromFacing(neighborPos, neighborBlockState.getBlock(), dir.getOpposite(), null);
     }
 
 
     public Direction getDirectionFromSide(Side side) {
         Direction facing = this.getBlockState().getValue(BlockStateProperties.FACING);
-        Direction hfacing = this.getBlockState().getValue(Registration.GATE_DIRECTION);
+        Direction hfacing = this.getBlockState().getValue(com.dannyandson.tinygates.setup.ModRegistration.GATE_DIRECTION);
 
         if (side == Side.FRONT) return hfacing;
         if (side == Side.BACK) return hfacing.getOpposite();
@@ -96,7 +96,7 @@ public abstract class AbstractGateBlockEntity extends BlockEntity {
      */
 
     protected void sync() {
-        if (!level.isClientSide)
+        if (!level.isClientSide())
             this.level.sendBlockUpdated(worldPosition, this.getBlockState(), this.getBlockState(), Block.UPDATE_CLIENTS);
         this.setChanged();
     }
@@ -109,20 +109,18 @@ public abstract class AbstractGateBlockEntity extends BlockEntity {
 
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
-        CompoundTag nbt = new CompoundTag();
-        this.saveAdditional(nbt, registries);
-        return nbt;
+        return this.saveWithoutMetadata(registries);
     }
 
     @Override
-    protected void loadAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
-        super.loadAdditional(nbt, registries);
-        this.output = nbt.getInt("output");
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        output.putInt("output", this.output);
     }
 
     @Override
-    protected void saveAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
-        super.saveAdditional(nbt, registries);
-        nbt.putInt("output", this.output);
+    public void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        this.output = input.getIntOr("output", 0);
     }
 }

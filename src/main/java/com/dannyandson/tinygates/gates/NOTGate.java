@@ -5,18 +5,18 @@ import com.dannyandson.tinyredstone.blocks.*;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 
 public class NOTGate extends AbstractGate {
 
     @Override
     public void render(PoseStack poseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay, float alpha) {
-        VertexConsumer builder = buffer.getBuffer((alpha==1.0)? RenderType.solid():RenderType.translucent());
+        VertexConsumer builder = buffer.getBuffer((alpha==1.0)? Sheets.cutoutBlockSheet():Sheets.translucentBlockSheet());
         TextureAtlasSprite sprite = RenderHelper.getSprite(PanelTileRenderer.TEXTURE);
-        TextureAtlasSprite sprite_xor_gate = output?RenderHelper.getSprite(RenderHelper.TEXTURE_NOT_GATE_ON):RenderHelper.getSprite(RenderHelper.TEXTURE_NOT_GATE_OFF);
+        TextureAtlasSprite sprite_not_gate = output?RenderHelper.getSprite(RenderHelper.TEXTURE_NOT_GATE_ON):RenderHelper.getSprite(RenderHelper.TEXTURE_NOT_GATE_OFF);
 
-        com.dannyandson.tinygates.RenderHelper.drawQuarterSlab(poseStack,builder,sprite_xor_gate,sprite,combinedLight,alpha);
+        com.dannyandson.tinygates.RenderHelper.drawQuarterSlab(poseStack,builder,sprite_not_gate,sprite,combinedLight,alpha);
     }
 
     @Override

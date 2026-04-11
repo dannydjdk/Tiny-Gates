@@ -6,16 +6,9 @@
     "TRT"
   ],
   "key": {
-    "T": {
-      "item": "tinyredstone:tiny_piston"
-    },
-    "R": {
-      "item": "tinyredstone:tiny_redstone"
-    },
-    "S":
-    {
-      "tag": "c:silicon"
-    }
+    "T": "tinyredstone:tiny_piston",
+    "R": "tinyredstone:tiny_redstone",
+    "S": "#c:silicon"
   },
   "result": {
     "id": "tinygates:tiny_edge_detector",

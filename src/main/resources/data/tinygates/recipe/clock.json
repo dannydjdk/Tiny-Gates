@@ -6,13 +6,8 @@
     " T "
   ],
   "key": {
-    "T": {
-      "item": "tinyredstone:tiny_repeater"
-    },
-    "S":
-    {
-      "tag": "c:silicon"
-    }
+    "T": "tinyredstone:tiny_repeater",
+    "S": "#c:silicon"
   },
   "result": {
     "id": "tinygates:tiny_clock",

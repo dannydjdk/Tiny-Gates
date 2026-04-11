@@ -5,12 +5,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class ANDGateBlock extends AbstractGateBlock{
+public class ANDGateBlock extends AbstractGateBlock {
 
-    public static final MapCodec<ANDGateBlock> CODEC = simpleCodec(p -> new ANDGateBlock());
+    public static final MapCodec<ANDGateBlock> CODEC = simpleCodec(ANDGateBlock::new);
 
-    public ANDGateBlock() {
-        super();
+    public ANDGateBlock(Properties props) {
+        super(props);
     }
 
     @Override

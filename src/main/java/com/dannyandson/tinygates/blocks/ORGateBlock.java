@@ -7,7 +7,11 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class ORGateBlock extends AbstractGateBlock {
 
-    public static final MapCodec<ORGateBlock> CODEC = simpleCodec(p -> new ORGateBlock());
+    public static final MapCodec<ORGateBlock> CODEC = simpleCodec(ORGateBlock::new);
+
+    public ORGateBlock(Properties props) {
+        super(props);
+    }
 
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {

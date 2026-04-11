@@ -6,16 +6,9 @@
     "TRT"
   ],
   "key": {
-    "T": {
-      "item": "minecraft:redstone_torch"
-    },
-    "R": {
-      "item": "minecraft:lever"
-    },
-    "S":
-    {
-      "tag": "c:stones"
-    }
+    "T": "minecraft:redstone_torch",
+    "R": "minecraft:lever",
+    "S": "#c:stones"
   },
   "result": {
     "id": "tinygates:rs_latch_item",

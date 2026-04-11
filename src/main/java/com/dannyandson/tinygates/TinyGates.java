@@ -1,14 +1,13 @@
 package com.dannyandson.tinygates;
 
 import com.dannyandson.tinygates.setup.ClientSetup;
-import com.dannyandson.tinygates.setup.Registration;
+import com.dannyandson.tinygates.setup.ModRegistration;
 import com.dannyandson.tinygates.setup.RegistrationTinyRedstone;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
-import net.neoforged.neoforge.common.NeoForge;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,11 +18,11 @@ public class TinyGates {
 
     public TinyGates(IEventBus modEventBus) {
 
-        Registration.register(modEventBus);
+        ModRegistration.register(modEventBus);
         if (ModList.get().isLoaded("tinyredstone"))
             RegistrationTinyRedstone.register();
 
-        if (FMLEnvironment.dist.isClient()) {
+        if (FMLEnvironment.getDist().isClient()) {
             modEventBus.addListener(ClientSetup::init);
         }
 

@@ -47,7 +47,7 @@ public abstract class AbstractGate implements IPanelCell, IPanelCellInfoProvider
 
     @Override
     public void readNBT(CompoundTag compoundTag) {
-        output=compoundTag.getBoolean("output");
+        output=compoundTag.getBooleanOr("output", false);
     }
 
     @Override

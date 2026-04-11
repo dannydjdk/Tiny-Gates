@@ -6,7 +6,7 @@ import com.dannyandson.tinyredstone.blocks.*;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.nbt.CompoundTag;
 
@@ -17,7 +17,7 @@ public class Counter extends AbstractGate {
 
     @Override
     public void render(PoseStack poseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay, float alpha) {
-        VertexConsumer builder = buffer.getBuffer((alpha==1.0)? RenderType.solid():RenderType.translucent());
+        VertexConsumer builder = buffer.getBuffer((alpha==1.0)? Sheets.cutoutBlockSheet():Sheets.translucentBlockSheet());
         TextureAtlasSprite sprite = RenderHelper.getSprite(PanelTileRenderer.TEXTURE);
         TextureAtlasSprite sprite_gate = RenderHelper.getSprite(RenderHelper.TEXTURES_COUNTER[output]);
 
@@ -35,11 +35,9 @@ public class Counter extends AbstractGate {
         this.input = backNeighbor!=null && backNeighbor.getWeakRsOutput()>0;
 
         if (leftNeighbor!=null && leftNeighbor.getWeakRsOutput()>0) {
-            //left input locks counter
             return false;
         }
         else if (rightNeighbor!=null && rightNeighbor.getWeakRsOutput()>0){
-            //right input resets counter
             output = 0;
         }
         else if (!previousinput && this.input && output<15){
@@ -68,8 +66,8 @@ public class Counter extends AbstractGate {
 
     @Override
     public void readNBT(CompoundTag compoundTag) {
-        output=compoundTag.getInt("output");
-        input=compoundTag.getBoolean("input");
+        output=compoundTag.getIntOr("output", 0);
+        input=compoundTag.getBooleanOr("input", false);
     }
 
     @Override

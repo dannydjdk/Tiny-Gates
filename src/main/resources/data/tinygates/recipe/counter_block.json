@@ -6,16 +6,9 @@
     "RTR"
   ],
   "key": {
-    "T": {
-      "item": "minecraft:comparator"
-    },
-    "R": {
-      "item": "minecraft:redstone"
-    },
-    "S":
-    {
-      "tag": "c:stones"
-    }
+    "T": "minecraft:comparator",
+    "R": "minecraft:redstone",
+    "S": "#c:stones"
   },
   "result": {
     "id": "tinygates:counter_item",

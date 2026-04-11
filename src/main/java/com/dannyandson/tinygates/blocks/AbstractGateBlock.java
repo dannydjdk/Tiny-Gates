@@ -1,7 +1,6 @@
 package com.dannyandson.tinygates.blocks;
 
-import com.dannyandson.tinygates.setup.Registration;
-import com.mojang.serialization.MapCodec;
+import com.dannyandson.tinygates.setup.ModRegistration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -14,15 +13,15 @@ import net.minecraft.world.level.SignalGetter;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import static net.minecraft.core.Direction.Axis;
 import static net.minecraft.core.Direction.DOWN;
@@ -33,20 +32,8 @@ public abstract class AbstractGateBlock extends BaseEntityBlock {
 
     public abstract boolean canConnectRedstone(Side side);
 
-    protected AbstractGateBlock() {
-        super(
-                Properties.of()
-                        .sound(SoundType.STONE)
-                        .strength(0.2f)
-        );
-    }
-
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        // Each concrete subclass should ideally provide its own codec.
-        // This default implementation prevents the crash. Subclasses that need
-        // serialization should override this.
-        throw new UnsupportedOperationException("codec() must be overridden in subclass: " + getClass().getName());
+    protected AbstractGateBlock(Properties props) {
+        super(props);
     }
 
     @Nullable
@@ -59,7 +46,7 @@ public abstract class AbstractGateBlock extends BaseEntityBlock {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(BlockStateProperties.FACING);
-        builder.add(Registration.GATE_DIRECTION);
+        builder.add(ModRegistration.GATE_DIRECTION);
     }
 
     @Nullable
@@ -80,7 +67,7 @@ public abstract class AbstractGateBlock extends BaseEntityBlock {
 
         return defaultBlockState()
                 .setValue(BlockStateProperties.FACING, facing)
-                .setValue(Registration.GATE_DIRECTION, hfacing);
+                .setValue(ModRegistration.GATE_DIRECTION, hfacing);
     }
 
     @Override
@@ -90,14 +77,13 @@ public abstract class AbstractGateBlock extends BaseEntityBlock {
         return true;
     }
 
-    @SuppressWarnings("deprecation")
     @Override
-    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos neighbor, boolean p_60514_) {
+    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, @Nullable Orientation orientation, boolean isMoving) {
         if (level.getBlockEntity(pos) instanceof AbstractGateBlockEntity gateEntity) {
-            if(gateEntity.onNeighborChange(neighbor))
+            if(gateEntity.onNeighborChange(null))
                 gateEntity.outputChange();
         } else
-            super.neighborChanged(state, level, pos, block, neighbor, p_60514_);
+            super.neighborChanged(state, level, pos, block, orientation, isMoving);
     }
 
     @Override
@@ -125,7 +111,6 @@ public abstract class AbstractGateBlock extends BaseEntityBlock {
         return super.playerWillDestroy(level, pos, state, player);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public int getDirectSignal(@NotNull BlockState blockState, BlockGetter blockGetter, @NotNull BlockPos pos, @NotNull Direction direction) {
         if (blockGetter.getBlockEntity(pos) instanceof AbstractGateBlockEntity gateEntity) {
@@ -134,7 +119,6 @@ public abstract class AbstractGateBlock extends BaseEntityBlock {
         return super.getDirectSignal(blockState, blockGetter, pos, direction);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public int getSignal(@NotNull BlockState blockState, BlockGetter blockGetter, @NotNull BlockPos pos, @NotNull Direction direction) {
         if (blockGetter.getBlockEntity(pos) instanceof AbstractGateBlockEntity gateEntity) {
@@ -145,11 +129,9 @@ public abstract class AbstractGateBlock extends BaseEntityBlock {
 
     @Override
     public boolean shouldCheckWeakPower(BlockState state, SignalGetter world, BlockPos pos, Direction directionFromNeighborToThis) {
-        //returning false to override default behavior and allow block entity to determine output
         return false;
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public boolean isSignalSource(@NotNull BlockState p_60571_) {
         return true;
@@ -182,7 +164,7 @@ public abstract class AbstractGateBlock extends BaseEntityBlock {
 
     public Side getSideFromDirection(Direction direction, BlockState state) {
         Direction facing = state.getValue(BlockStateProperties.FACING);
-        Direction hfacing = state.getValue(Registration.GATE_DIRECTION);
+        Direction hfacing = state.getValue(ModRegistration.GATE_DIRECTION);
 
         if (direction == hfacing) return Side.FRONT;
         if (direction == hfacing.getOpposite()) return Side.BACK;

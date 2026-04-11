@@ -1,21 +1,21 @@
 package com.dannyandson.tinygates.blocks;
 
 import com.dannyandson.tinygates.RenderHelper;
-import com.dannyandson.tinygates.setup.Registration;
+import com.dannyandson.tinygates.setup.ModRegistration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
-public class XORGateBlockEntity extends AbstractGateBlockEntity{
+public class XORGateBlockEntity extends AbstractGateBlockEntity {
 
     public XORGateBlockEntity(BlockPos pos, BlockState state) {
-        super(Registration.XOR_GATE_BLOCK_ENTITY.get(), pos, state);
+        super(ModRegistration.XOR_GATE_BLOCK_ENTITY.get(), pos, state);
     }
 
     @Override
-    public ResourceLocation getTexture() {
+    public Identifier getTexture() {
         if (this.output>0)
             return RenderHelper.TEXTURE_XOR_GATE_ON;
         return RenderHelper.TEXTURE_XOR_GATE_OFF;

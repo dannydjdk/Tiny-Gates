@@ -6,16 +6,9 @@
     "TRT"
   ],
   "key": {
-    "T": {
-      "item": "tinyredstone:tiny_redstone_torch"
-    },
-    "R": {
-      "item": "tinyredstone:tiny_lever"
-    },
-    "S":
-    {
-      "tag": "c:silicon"
-    }
+    "T": "tinyredstone:tiny_redstone_torch",
+    "R": "tinyredstone:tiny_lever",
+    "S": "#c:silicon"
   },
   "result": {
     "id": "tinygates:tiny_rs_latch",

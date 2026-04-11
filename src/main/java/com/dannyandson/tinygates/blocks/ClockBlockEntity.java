@@ -1,14 +1,14 @@
 package com.dannyandson.tinygates.blocks;
 
 import com.dannyandson.tinygates.gui.ClockBlockGUI;
-import com.dannyandson.tinygates.setup.Registration;
+import com.dannyandson.tinygates.setup.ModRegistration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import org.jspecify.annotations.Nullable;
 
 import static com.dannyandson.tinygates.RenderHelper.TEXTURES_CLOCK;
 
@@ -19,11 +19,11 @@ public class ClockBlockEntity extends AbstractGateBlockEntity {
     private boolean input = false;
 
     public ClockBlockEntity(BlockPos pos, BlockState state) {
-        super(Registration.CLOCK_BLOCK_ENTITY.get(), pos, state);
+        super(ModRegistration.CLOCK_BLOCK_ENTITY.get(), pos, state);
     }
 
     @Override
-    public ResourceLocation getTexture() {
+    public Identifier getTexture() {
         return (this.output > 0 ? TEXTURES_CLOCK[TEXTURES_CLOCK.length - 1] : TEXTURES_CLOCK[Math.min(Math.floorDiv(tick * (TEXTURES_CLOCK.length - 1), ticks), TEXTURES_CLOCK.length - 1)]);
     }
 
@@ -54,7 +54,7 @@ public class ClockBlockEntity extends AbstractGateBlockEntity {
 
     public void use()
     {
-        if (getLevel().isClientSide)
+        if (getLevel().isClientSide())
             ClockBlockGUI.open(this);
     }
 
@@ -71,18 +71,18 @@ public class ClockBlockEntity extends AbstractGateBlockEntity {
     }
 
     @Override
-    protected void loadAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
-        super.loadAdditional(nbt, registries);
-        ticks=nbt.getInt("ticks");
-        tick=nbt.getInt("tick");
-        input=nbt.getBoolean("input");
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        output.putInt("ticks", this.ticks);
+        output.putInt("tick", this.tick);
+        output.putBoolean("input", this.input);
     }
 
     @Override
-    protected void saveAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
-        super.saveAdditional(nbt, registries);
-        nbt.putInt("ticks",ticks);
-        nbt.putInt("tick",tick);
-        nbt.putBoolean("input",input);
+    public void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        this.ticks = input.getIntOr("ticks", 20);
+        this.tick = input.getIntOr("tick", 0);
+        this.input = input.getBooleanOr("input", false);
     }
 }

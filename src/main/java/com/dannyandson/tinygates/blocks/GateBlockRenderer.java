@@ -2,32 +2,59 @@ package com.dannyandson.tinygates.blocks;
 
 import com.dannyandson.tinygates.RenderHelper;
 import com.dannyandson.tinygates.TinyGates;
-import com.dannyandson.tinygates.setup.Registration;
+import com.dannyandson.tinygates.setup.ModRegistration;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.model.sprite.SpriteId;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.phys.Vec3;
+import org.jspecify.annotations.Nullable;
 
+import static net.minecraft.client.renderer.texture.TextureAtlas.LOCATION_BLOCKS;
 import static net.minecraft.core.Direction.*;
 
-public class GateBlockRenderer implements BlockEntityRenderer<AbstractGateBlockEntity> {
+public class GateBlockRenderer implements BlockEntityRenderer<AbstractGateBlockEntity, GateBlockRenderState> {
 
-    public static ResourceLocation TEXTURE_BLANK_PANEL = ResourceLocation.fromNamespaceAndPath(TinyGates.MODID,"block/panel_blank");
+    public static Identifier TEXTURE_BLANK_PANEL = Identifier.fromNamespaceAndPath(TinyGates.MODID,"block/panel_blank");
 
     public GateBlockRenderer(BlockEntityRendererProvider.Context context){
     }
 
     @Override
-    public void render(AbstractGateBlockEntity gateBlockEntity, float p_112308_, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, int p_112312_) {
-        Direction facing = gateBlockEntity.getBlockState().getValue(BlockStateProperties.FACING);
-        Direction gateDirection = gateBlockEntity.getBlockState().getValue(Registration.GATE_DIRECTION);
+    public GateBlockRenderState createRenderState() {
+        return new GateBlockRenderState();
+    }
+
+    @Override
+    public void extractRenderState(AbstractGateBlockEntity gateBlockEntity, GateBlockRenderState state, float partialTick,
+                                   Vec3 cameraPos,
+                                   ModelFeatureRenderer.@Nullable CrumblingOverlay crumblingOverlay) {
+        BlockEntityRenderer.super.extractRenderState(gateBlockEntity, state, partialTick, cameraPos, crumblingOverlay);
+        state.lightCoords = LevelRenderer.getLightCoords(gateBlockEntity.getLevel(), gateBlockEntity.getBlockPos());
+        state.texture = gateBlockEntity.getTexture();
+        state.facing = gateBlockEntity.getBlockState().getValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.FACING);
+        state.gateDirection = gateBlockEntity.getBlockState().getValue(ModRegistration.GATE_DIRECTION);
+    }
+
+    @Override
+    public void submit(GateBlockRenderState state, PoseStack poseStack,
+                       SubmitNodeCollector collector, CameraRenderState camera) {
+        Direction facing = state.facing;
+        Direction gateDirection = state.gateDirection;
+
+        MultiBufferSource.BufferSource bufferSource =
+                Minecraft.getInstance().renderBuffers().bufferSource();
 
         poseStack.pushPose();
 
@@ -66,35 +93,35 @@ public class GateBlockRenderer implements BlockEntityRenderer<AbstractGateBlockE
             poseStack.translate(0, 0, -1);
         }
 
-        TextureAtlasSprite sprite = RenderHelper.getSprite(TEXTURE_BLANK_PANEL);
-        TextureAtlasSprite sprite_top = RenderHelper.getSprite(gateBlockEntity.getTexture());
-        VertexConsumer builder = buffer.getBuffer(RenderType.solid());
+        TextureAtlasSprite sprite = Minecraft.getInstance().getAtlasManager().get(new SpriteId(LOCATION_BLOCKS, TEXTURE_BLANK_PANEL));
+        TextureAtlasSprite sprite_top = Minecraft.getInstance().getAtlasManager().get(new SpriteId(LOCATION_BLOCKS, state.texture));
+        VertexConsumer builder = bufferSource.getBuffer(net.minecraft.client.renderer.Sheets.cutoutBlockSheet());
         int color = 0xFFFFFFFF;
 
         poseStack.pushPose();
         poseStack.mulPose(Axis.XP.rotationDegrees(270));
         poseStack.translate(0, -1, 0.125);
-        RenderHelper.drawRectangle(builder, poseStack, 0, 1, 0, 1, sprite_top.getU1(), sprite_top.getU0(), sprite_top.getV0(), sprite_top.getV1(), combinedLight, color, 1.0f);
+        RenderHelper.drawRectangle(builder, poseStack, 0, 1, 0, 1, sprite_top.getU1(), sprite_top.getU0(), sprite_top.getV0(), sprite_top.getV1(), state.lightCoords, color, 1.0f);
 
         poseStack.mulPose(Axis.XP.rotationDegrees(90));
         poseStack.translate(0, -0.125, 0);
-        RenderHelper.drawRectangle(builder, poseStack, 0, 1, 0, .125f, sprite, combinedLight, 1.0f);
+        RenderHelper.drawRectangle(builder, poseStack, 0, 1, 0, .125f, sprite, state.lightCoords, 1.0f);
 
         poseStack.mulPose(Axis.YP.rotationDegrees(90));
         poseStack.translate(0, 0, 1);
-        RenderHelper.drawRectangle(builder, poseStack, 0, 1, 0, .125f, sprite, combinedLight, 1.0f);
+        RenderHelper.drawRectangle(builder, poseStack, 0, 1, 0, .125f, sprite, state.lightCoords, 1.0f);
 
         poseStack.mulPose(Axis.YP.rotationDegrees(90));
         poseStack.translate(0, 0, 1);
-        RenderHelper.drawRectangle(builder, poseStack, 0, 1, 0, .125f, sprite, combinedLight, 1.0f);
+        RenderHelper.drawRectangle(builder, poseStack, 0, 1, 0, .125f, sprite, state.lightCoords, 1.0f);
 
         poseStack.mulPose(Axis.YP.rotationDegrees(90));
         poseStack.translate(0, 0, 1);
-        RenderHelper.drawRectangle(builder, poseStack, 0, 1, 0, .125f, sprite, combinedLight, 1.0f);
+        RenderHelper.drawRectangle(builder, poseStack, 0, 1, 0, .125f, sprite, state.lightCoords, 1.0f);
 
         poseStack.mulPose(Axis.XP.rotationDegrees(90));
         poseStack.translate(0, -1, 0);
-        RenderHelper.drawRectangle(builder, poseStack, 0, 1, 0, 1, sprite, combinedLight, 1.0f);
+        RenderHelper.drawRectangle(builder, poseStack, 0, 1, 0, 1, sprite, state.lightCoords, 1.0f);
 
         poseStack.popPose();
 

@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "": {
+            "model": "tinygates:block/gate_empty"
+        }
+    }
+}

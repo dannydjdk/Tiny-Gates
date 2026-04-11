@@ -6,13 +6,8 @@
     "TTT"
   ],
   "key": {
-    "T": {
-      "item": "tinyredstone:tiny_redstone"
-    },
-    "S":
-    {
-      "tag": "c:silicon"
-    }
+    "T": "tinyredstone:tiny_redstone",
+    "S": "#c:silicon"
   },
   "result": {
     "id": "tinygates:tiny_or_gate",

@@ -6,16 +6,9 @@
     "TRT"
   ],
   "key": {
-    "T": {
-      "item": "minecraft:repeater"
-    },
-    "R": {
-      "item": "minecraft:comparator"
-    },
-    "S":
-    {
-      "tag": "c:stones"
-    }
+    "T": "minecraft:repeater",
+    "R": "minecraft:comparator",
+    "S": "#c:stones"
   },
   "result": {
     "id": "tinygates:t_flip_flop_item",

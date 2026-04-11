@@ -7,7 +7,11 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class RSLatchBlock extends AbstractGateBlock {
 
-    public static final MapCodec<RSLatchBlock> CODEC = simpleCodec(p -> new RSLatchBlock());
+    public static final MapCodec<RSLatchBlock> CODEC = simpleCodec(RSLatchBlock::new);
+
+    public RSLatchBlock(Properties props) {
+        super(props);
+    }
 
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {

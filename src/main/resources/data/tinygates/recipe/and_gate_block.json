@@ -6,13 +6,8 @@
     "TTT"
   ],
   "key": {
-    "T": {
-      "item": "minecraft:redstone_torch"
-    },
-    "S":
-    {
-      "tag": "c:stones"
-    }
+    "T": "minecraft:redstone_torch",
+    "S": "#c:stones"
   },
   "result": {
     "id": "tinygates:and_gate_item",

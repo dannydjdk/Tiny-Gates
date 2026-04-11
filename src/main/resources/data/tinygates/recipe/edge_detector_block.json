@@ -6,16 +6,9 @@
     "TRT"
   ],
   "key": {
-    "T": {
-      "item": "minecraft:piston"
-    },
-    "R": {
-      "item": "minecraft:redstone"
-    },
-    "S":
-    {
-      "tag": "c:stones"
-    }
+    "T": "minecraft:piston",
+    "R": "minecraft:redstone",
+    "S": "#c:stones"
   },
   "result": {
     "id": "tinygates:edge_detector_item",

@@ -1,10 +1,11 @@
 package com.dannyandson.tinygates.gui;
 
 import com.dannyandson.tinygates.TinyGates;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public abstract class ClockGUI extends Screen {
 
@@ -13,7 +14,7 @@ public abstract class ClockGUI extends Screen {
 
     private ModWidget tickCount;
 
-    private final ResourceLocation GUI = ResourceLocation.fromNamespaceAndPath(TinyGates.MODID, "textures/gui/transparent.png");
+    private final Identifier GUI = Identifier.fromNamespaceAndPath(TinyGates.MODID, "textures/gui/transparent.png");
 
     protected ClockGUI(Component component) {
         super(component);
@@ -31,12 +32,12 @@ public abstract class ClockGUI extends Screen {
         this.tickCount = new ModWidget(relX,relY+21,WIDTH,20, Component.nullToEmpty(redstoneTicks.toString()))
                 .setTextHAlignment(ModWidget.HAlignment.CENTER).setTextVAlignment(ModWidget.VAlignment.MIDDLE);
 
-        addRenderableWidget(new ModWidget(relX-1, relY-1, WIDTH+2, HEIGHT+2, 0xAA000000));
-        addRenderableWidget(new ModWidget(relX, relY, WIDTH, HEIGHT, 0x88EEEEEE));
+        addRenderableOnly(new ModWidget(relX-1, relY-1, WIDTH+2, HEIGHT+2, 0xAA000000));
+        addRenderableOnly(new ModWidget(relX, relY, WIDTH, HEIGHT, 0x88EEEEEE));
         addRenderableWidget(ModWidget.buildButton(relX + 35, relY + 48, 80, 20, Component.translatable("tinygates.close"), button -> close()));
-        addRenderableWidget(this.tickCount);
+        addRenderableOnly(this.tickCount);
 
-        addRenderableWidget(new ModWidget(relX,relY+3,WIDTH-2,20,Component.translatable("tinygates.gui.clock.msg")))
+        addRenderableOnly(new ModWidget(relX,relY+3,WIDTH-2,20,Component.translatable("tinygates.gui.clock.msg")))
                 .setTextHAlignment(ModWidget.HAlignment.CENTER);
         addRenderableWidget(ModWidget.buildButton(relX + 10, relY + 15, 20, 20, Component.nullToEmpty("--"), button -> changeTicks(-20)));
         addRenderableWidget(ModWidget.buildButton(relX + 35, relY + 15, 20, 20, Component.nullToEmpty("-"), button -> changeTicks(-2)));
@@ -50,7 +51,6 @@ public abstract class ClockGUI extends Screen {
     }
 
     private void changeTicks(int change) {
-
         setTicks(getTicks() + change);
 
         int relX = (this.width - WIDTH) / 2;
@@ -60,25 +60,14 @@ public abstract class ClockGUI extends Screen {
         this.removeWidget(this.tickCount);
         this.tickCount = new ModWidget(relX, relY + 21, WIDTH, 20, Component.nullToEmpty(redstoneTicks.toString()))
                 .setTextHAlignment(ModWidget.HAlignment.CENTER).setTextVAlignment(ModWidget.VAlignment.MIDDLE);
-        addRenderableWidget(this.tickCount);
+        addRenderableOnly(this.tickCount);
     }
 
     @Override
-    public boolean isPauseScreen() {
-        return false;
-    }
-
-    @Override
-    public void renderBackground(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        // Override to avoid the 1.21 blur effect - darken only
+    public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
         guiGraphics.fill(0, 0, this.width, this.height, 0xC0101010);
         int relX = (this.width - WIDTH) / 2;
         int relY = (this.height - HEIGHT) / 2;
-        guiGraphics.blit(GUI, relX, relY, 0, 0, WIDTH, HEIGHT);
-    }
-
-    @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        super.render(guiGraphics, mouseX, mouseY, partialTicks);
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, GUI, relX, relY, 0, 0, WIDTH, HEIGHT, 256, 256);
     }
 }

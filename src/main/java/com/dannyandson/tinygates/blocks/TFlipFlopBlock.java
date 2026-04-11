@@ -7,7 +7,11 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class TFlipFlopBlock extends AbstractGateBlock {
 
-    public static final MapCodec<TFlipFlopBlock> CODEC = simpleCodec(p -> new TFlipFlopBlock());
+    public static final MapCodec<TFlipFlopBlock> CODEC = simpleCodec(TFlipFlopBlock::new);
+
+    public TFlipFlopBlock(Properties props) {
+        super(props);
+    }
 
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {

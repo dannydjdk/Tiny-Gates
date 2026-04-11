@@ -7,7 +7,11 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class XORGateBlock extends AbstractGateBlock {
 
-    public static final MapCodec<XORGateBlock> CODEC = simpleCodec(p -> new XORGateBlock());
+    public static final MapCodec<XORGateBlock> CODEC = simpleCodec(XORGateBlock::new);
+
+    public XORGateBlock(Properties props) {
+        super(props);
+    }
 
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {

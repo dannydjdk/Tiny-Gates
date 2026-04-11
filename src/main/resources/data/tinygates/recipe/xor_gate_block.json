@@ -6,16 +6,9 @@
     "TRT"
   ],
   "key": {
-    "T": {
-      "item": "minecraft:redstone_torch"
-    },
-    "R": {
-      "item": "minecraft:redstone"
-    },
-    "S":
-    {
-      "tag": "c:stones"
-    }
+    "T": "minecraft:redstone_torch",
+    "R": "minecraft:redstone",
+    "S": "#c:stones"
   },
   "result": {
     "id": "tinygates:xor_gate_item",
