@@ -20,6 +20,7 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
 
 public class ModRegistration {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(TinyGates.MODID);
@@ -27,7 +28,8 @@ public class ModRegistration {
     private static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, TinyGates.MODID);
     private static final DeferredRegister<CreativeModeTab> TAB = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, TinyGates.MODID);
 
-    private static final BlockBehaviour.Properties GATE_BLOCK_PROPS = BlockBehaviour.Properties.of().sound(SoundType.STONE).strength(0.2f);
+    private static final UnaryOperator<BlockBehaviour.Properties> GATE_BLOCK_PROPS =
+            props -> props.sound(SoundType.STONE).strength(0.2f);
 
     public static final DeferredBlock<ANDGateBlock> AND_GATE_BLOCK = BLOCKS.registerBlock("and_gate_block", ANDGateBlock::new, GATE_BLOCK_PROPS);
     public static final DeferredItem<Item> AND_GATE_ITEM = ITEMS.registerItem("and_gate_item", props -> new GateBlockItem(AND_GATE_BLOCK.get(), props));
