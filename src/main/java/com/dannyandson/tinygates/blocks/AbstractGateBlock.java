@@ -10,10 +10,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.SignalGetter;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -108,6 +110,27 @@ public abstract class AbstractGateBlock extends BaseEntityBlock {
                 gateEntity.outputChange();
         } else
             super.onPlace(p_60566_, level, pos, p_60569_, p_60570_);
+    }
+
+    /**
+     * Rotate the block state. Called by vanilla structure templates (/place template, jigsaw,
+     * structure blocks) and by Sable during assembly/ disassembly of moving regions.
+     */
+    @Override
+    @SuppressWarnings("deprecation")
+    public BlockState rotate(BlockState state, Rotation rotation) {
+        if (rotation == Rotation.NONE) return state;
+        return state
+                .setValue(BlockStateProperties.FACING, rotation.rotate(state.getValue(BlockStateProperties.FACING)))
+                .setValue(Registration.GATE_DIRECTION, rotation.rotate(state.getValue(Registration.GATE_DIRECTION)));
+    }
+
+    /**
+     * Position-aware rotate override (NeoForge IBlockExtension).
+     */
+    @Override
+    public BlockState rotate(BlockState state, LevelAccessor level, BlockPos pos, Rotation rotation) {
+        return rotate(state, rotation);
     }
 
     @Override
