@@ -38,6 +38,7 @@ public abstract class AbstractGateBlock extends BaseEntityBlock {
                 Properties.of()
                         .sound(SoundType.STONE)
                         .strength(0.2f)
+                        .forceSolidOn()
         );
     }
 
