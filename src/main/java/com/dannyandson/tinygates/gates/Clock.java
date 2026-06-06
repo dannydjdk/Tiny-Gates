@@ -96,7 +96,7 @@ public class Clock extends AbstractGate {
             this.tick=0;
 
         if (ticks<2)this.ticks=2;
-        else if(ticks>200)this.ticks=200;
+        else if(ticks>2000)this.ticks=2000;
         else this.ticks=ticks;
     }
 
@@ -113,7 +113,7 @@ public class Clock extends AbstractGate {
         BlockPos pos = panelTile.getBlockPos();
         for (Player player : panelTile.getLevel().players()) {
             if (player instanceof ServerPlayer serverPlayer && player.distanceToSqr(pos.getX(),pos.getY(),pos.getZ()) < 64d) {
-                PacketDistributor.sendToPlayer(serverPlayer, new PanelCellSync(pos, cellPos.getIndex(), writeNBT()));
+                PacketDistributor.sendToPlayer(serverPlayer, new PanelCellSync(pos, cellPos.getIndex(), writeNBT(), true));
             }
         }
     }
