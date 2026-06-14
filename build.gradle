@@ -47,10 +47,17 @@ repositories {
             includeGroup "curse.maven"
         }
     }
+    maven {
+        name = "TinyRedstoneLocal"
+        url = uri("../Tiny-Redstone/mcmodsrepo")
+    }
 }
 
 dependencies {
-    implementation "curse.maven:tiny-redstone-453746:7942270"
+    //implementation "curse.maven:tiny-redstone-453746:7942270"
+    implementation("com.dannyandson.tinyredstone:Tiny-Redstone:26.1-7.0.5") {
+        transitive = false
+    }
 
     implementation "curse.maven:jade-324717:7817285"
     implementation "curse.maven:jei-238222:7920926"

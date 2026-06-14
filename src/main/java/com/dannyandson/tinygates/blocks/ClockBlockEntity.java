@@ -66,7 +66,7 @@ public class ClockBlockEntity extends AbstractGateBlockEntity {
             this.tick=0;
 
         if (ticks<2)this.ticks=2;
-        else if(ticks>200)this.ticks=200;
+        else if(ticks>2000)this.ticks=2000;
         else this.ticks=ticks;
     }
 

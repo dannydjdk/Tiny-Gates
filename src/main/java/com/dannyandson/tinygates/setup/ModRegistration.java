@@ -29,7 +29,7 @@ public class ModRegistration {
     private static final DeferredRegister<CreativeModeTab> TAB = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, TinyGates.MODID);
 
     private static final UnaryOperator<BlockBehaviour.Properties> GATE_BLOCK_PROPS =
-            props -> props.sound(SoundType.STONE).strength(0.2f);
+            props -> props.sound(SoundType.STONE).strength(0.2f).forceSolidOn();
 
     public static final DeferredBlock<ANDGateBlock> AND_GATE_BLOCK = BLOCKS.registerBlock("and_gate_block", ANDGateBlock::new, GATE_BLOCK_PROPS);
     public static final DeferredItem<Item> AND_GATE_ITEM = ITEMS.registerItem("and_gate_item", props -> new GateBlockItem(AND_GATE_BLOCK.get(), props));
