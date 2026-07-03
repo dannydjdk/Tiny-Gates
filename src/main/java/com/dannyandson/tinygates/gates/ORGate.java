@@ -7,15 +7,14 @@ import com.dannyandson.tinyredstone.blocks.PanelTileRenderer;
 import com.dannyandson.tinyredstone.blocks.Side;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.Sheets;
+import com.dannyandson.tinyredstone.api.IRenderTarget;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 
 public class ORGate extends AbstractGate {
 
     @Override
-    public void render(PoseStack poseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay, float alpha) {
-        VertexConsumer builder = buffer.getBuffer((alpha==1.0)? Sheets.cutoutBlockSheet():Sheets.translucentBlockSheet());
+    public void render(PoseStack poseStack, IRenderTarget target, int combinedLight, int combinedOverlay, float alpha) {
+        VertexConsumer builder = (alpha == 1.0) ? target.solid() : target.translucent();
         TextureAtlasSprite sprite = RenderHelper.getSprite(PanelTileRenderer.TEXTURE);
         TextureAtlasSprite sprite_or_gate = output?RenderHelper.getSprite(RenderHelper.TEXTURE_OR_GATE_ON):RenderHelper.getSprite(RenderHelper.TEXTURE_OR_GATE_OFF);
 

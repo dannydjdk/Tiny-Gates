@@ -47,7 +47,7 @@ public abstract class ClockGUI extends Screen {
     }
 
     private void close() {
-        minecraft.setScreen(null);
+        minecraft.gui.setScreen(null);
     }
 
     private void changeTicks(int change) {

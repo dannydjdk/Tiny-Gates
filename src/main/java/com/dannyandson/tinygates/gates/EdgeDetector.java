@@ -5,8 +5,7 @@ import com.dannyandson.tinyredstone.api.IOverlayBlockInfo;
 import com.dannyandson.tinyredstone.blocks.*;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.Sheets;
+import com.dannyandson.tinyredstone.api.IRenderTarget;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
@@ -18,8 +17,8 @@ public class EdgeDetector extends AbstractGate {
     private int ticks=0;
 
     @Override
-    public void render(PoseStack poseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay, float alpha) {
-        VertexConsumer builder = buffer.getBuffer((alpha==1.0)? Sheets.cutoutBlockSheet():Sheets.translucentBlockSheet());
+    public void render(PoseStack poseStack, IRenderTarget target, int combinedLight, int combinedOverlay, float alpha) {
+        VertexConsumer builder = (alpha == 1.0) ? target.solid() : target.translucent();
         TextureAtlasSprite sprite = RenderHelper.getSprite(PanelTileRenderer.TEXTURE);
         TextureAtlasSprite sprite_gate = RenderHelper.getSprite(output?(rising? RenderHelper.TEXTURE_RISING_ON: RenderHelper.TEXTURE_FALLING_ON):(rising? RenderHelper.TEXTURE_RISING_OFF: RenderHelper.TEXTURE_FALLING_OFF));
 

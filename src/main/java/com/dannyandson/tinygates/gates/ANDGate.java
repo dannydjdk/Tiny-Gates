@@ -4,15 +4,14 @@ import com.dannyandson.tinygates.RenderHelper;
 import com.dannyandson.tinyredstone.blocks.*;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.Sheets;
+import com.dannyandson.tinyredstone.api.IRenderTarget;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 
 public class ANDGate extends AbstractGate {
 
     @Override
-    public void render(PoseStack poseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay, float alpha) {
-        VertexConsumer builder = buffer.getBuffer((alpha==1.0)? Sheets.cutoutBlockSheet():Sheets.translucentBlockSheet());
+    public void render(PoseStack poseStack, IRenderTarget target, int combinedLight, int combinedOverlay, float alpha) {
+        VertexConsumer builder = (alpha == 1.0) ? target.solid() : target.translucent();
         TextureAtlasSprite sprite = RenderHelper.getSprite(PanelTileRenderer.TEXTURE);
         TextureAtlasSprite sprite_and_gate = output?RenderHelper.getSprite(RenderHelper.TEXTURE_AND_GATE_ON):RenderHelper.getSprite(RenderHelper.TEXTURE_AND_GATE_OFF);
 
@@ -27,7 +26,7 @@ public class ANDGate extends AbstractGate {
 
         boolean output =
                 (rightNeighbor!=null && rightNeighbor.getWeakRsOutput()>0) &&
-                (leftNeighbor!=null && leftNeighbor.getWeakRsOutput()>0);
+                        (leftNeighbor!=null && leftNeighbor.getWeakRsOutput()>0);
 
         if (output!=this.output){
             this.output=output;

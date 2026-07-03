@@ -27,6 +27,6 @@ public class ClockBlockGUI extends ClockGUI{
     }
 
     public static void open(ClockBlockEntity clockBlockEntity) {
-        Minecraft.getInstance().setScreen(new ClockBlockGUI(clockBlockEntity));
+        Minecraft.getInstance().gui.setScreen(new ClockBlockGUI(clockBlockEntity));
     }
 }

@@ -31,6 +31,6 @@ public class TinyClockGUI extends ClockGUI {
     }
 
     public static void open(PanelTile panelTile, Integer cellIndex, Clock clockCell) {
-        Minecraft.getInstance().setScreen(new TinyClockGUI(panelTile, cellIndex, clockCell));
+        Minecraft.getInstance().gui.setScreen(new TinyClockGUI(panelTile, cellIndex, clockCell));
     }
 }
